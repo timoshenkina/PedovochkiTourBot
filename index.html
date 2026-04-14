@@ -101,34 +101,32 @@ html, body {
   display: flex; flex-direction: column; align-items: center; gap: 12px;
   cursor: pointer; transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   min-height: 140px; justify-content: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 .cat-card:active { transform: scale(0.95); }
 .cat-icon-circle {
   width: 72px; height: 72px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-size: 32px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 .cat-name { font-size: 14px; font-weight: 700; }
 
-.cat-food { background: #FFF3D0; }
-.cat-food .cat-icon-circle { background: #FFE082; border: 2.5px solid #F5C040; }
+.cat-food { background: #FFF3D0; box-shadow: 0 8px 20px rgba(255, 107, 53, 0.05); }
+.cat-food .cat-icon-circle { background: #FFE082; border: 2.5px solid #F5C040; box-shadow: 0 6px 16px rgba(255, 61, 47, 0.05); }
 .cat-food .cat-icon-circle i { color: #FF3D2F; }
 .cat-food .cat-name { color: #FF3D2F; }
 
-.cat-walk { background: #DEFFBF; }
-.cat-walk .cat-icon-circle { background: #D0FFA4; border: 2.5px solid #9BED8C; }
+.cat-walk { background: #DEFFBF; box-shadow: 0 8px 20px rgba(0, 150, 20, 0.05); }
+.cat-walk .cat-icon-circle { background: #D0FFA4; border: 2.5px solid #9BED8C; box-shadow: 0 6px 16px rgba(0, 194, 23, 0.05); }
 .cat-walk .cat-icon-circle i { color: #00C217; }
 .cat-walk .cat-name { color: #00C217; }
 
-.cat-see { background: #FFF0F6; }
-.cat-see .cat-icon-circle { background: #FFB3D1; border: 2.5px solid #FF8DB8; }
+.cat-see { background: #FFF0F6; box-shadow: 0 8px 20px rgba(180, 20, 90, 0.05); }
+.cat-see .cat-icon-circle { background: #FFB3D1; border: 2.5px solid #FF8DB8; box-shadow: 0 6px 16px rgba(192, 32, 106, 0.05); }
 .cat-see .cat-icon-circle i { color: #C0206A; }
 .cat-see .cat-name { color: #C0206A; }
 
-.cat-photo { background: #F5EEFF; }
-.cat-photo .cat-icon-circle { background: #DBC8FF; border: 2.5px solid #BE96E4; }
+.cat-photo { background: #F5EEFF; box-shadow: 0 8px 20px rgba(80, 30, 160, 0.05); }
+.cat-photo .cat-icon-circle { background: #DBC8FF; border: 2.5px solid #BE96E4; box-shadow: 0 6px 16px rgba(96, 48, 184, 0.05); }
 .cat-photo .cat-icon-circle i { color: #6030B8; }
 .cat-photo .cat-name { color: #6030B8; }
 
@@ -381,16 +379,16 @@ html, body {
   border-radius:20px 20px 0 0; padding:20px 20px 32px; }
 .day-sheet-title { font-size:17px; font-weight:700; color:var(--text); margin-bottom:16px; text-align:center; }
 .day-option { display:flex; align-items:center; justify-content:space-between;
-  padding:14px 16px; border-radius:12px; background:var(--pink-light); margin-bottom:10px;
-  cursor:pointer; font-size:15px; font-weight:500; color:var(--text); transition:opacity 0.15s; }
-.day-option:active { opacity:0.75; }
+  padding:18px 20px; border-radius:16px; background:#FFDDEB; margin-bottom:12px;
+  cursor:pointer; font-size:16px; font-weight:600; color:var(--text); transition:all 0.2s; }
+.day-option:active { transform: scale(0.98); opacity:0.8; }
 .day-option.disabled { opacity:0.4; cursor:default; }
+.day-option.active { background: var(--pink); color: #fff; }
+.day-option.active .day-dot { background: rgba(255,255,255,0.4); }
+.day-option.active .day-dot.filled { background: #fff; }
 .day-dots { display:flex; gap:5px; }
-.day-dot { width:9px; height:9px; border-radius:50%; background:var(--pink-mid); }
+.day-dot { width:9px; height:9px; border-radius:50%; background:var(--pink-mid); transition: all 0.2s; }
 .day-dot.filled { background:var(--pink); }
-.day-cancel { width:100%; padding:14px; border-radius:12px; border:none;
-  background:#F2F2F7; color:var(--text); font-size:15px; font-weight:500;
-  cursor:pointer; margin-top:4px; font-family:'Playfair Display', serif; }
 /* TOAST */
 .toast {
   position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px);
@@ -400,10 +398,15 @@ html, body {
   transition: opacity 0.2s, transform 0.2s;
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-.time-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-.time-opt { padding: 14px; border-radius: 12px; background: var(--pink-light); text-align: center; color: var(--pink); font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 15px; }
+.time-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 30px; }
+.time-opt { padding: 16px; border-radius: 16px; background: #FFDDEB; text-align: center; color: var(--pink); font-weight: 700; cursor: pointer; transition: all 0.2s; font-size: 18px; }
 .time-opt:active { transform: scale(0.95); opacity: 0.8; }
 .time-opt.active { background: var(--pink); color: #fff; }
+.time-actions { display: flex; gap: 12px; }
+.time-actions .tbtn { flex: 1; padding: 18px; border-radius: 16px; border: none; font-size: 16px; font-weight: 700; cursor: pointer; font-family: 'Playfair Display', serif; transition: all 0.2s; }
+.time-actions .tbtn:active { transform: scale(0.96); }
+.time-actions .tbtn-cancel { background: #F2F2F7; color: #000; }
+.time-actions .tbtn-close { background: #000; color: #fff; }
 
 .day-header { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; margin-bottom: 8px; }
 .day-title { font-size: 16px; font-weight: 600; color: var(--text); font-family: 'Playfair Display', serif; }
@@ -465,7 +468,7 @@ html, body {
 }
 .onboarding-title {
   font-family: 'Playfair Display', serif;
-  font-size: 22px; font-weight: 900; line-height: 0.95; letter-spacing: -0.6px;
+  font-size: 22px; font-weight: 900; line-height: 0.85; letter-spacing: -0.6px;
   margin-bottom: 24px; margin-top: 90px;
   color: rgba(38, 10, 24, 0.8);
 }
@@ -474,11 +477,17 @@ html, body {
   font-size: 14px; font-weight: 500; line-height: normal;
   color: rgba(135, 8, 8, 0.8);
 }
+.onboarding-body p {
+  margin-bottom: 12px;
+}
+.onboarding-body p:last-child {
+  margin-bottom: 0;
+}
 .onboarding-btn {
   background: #3E2021; color: #FFFFFF;
   border-radius: 100px; padding: 14px 40px;
   border: none; font-size: 14px; font-weight: 600;
-  cursor: pointer; text-transform: lowercase;
+  cursor: pointer;
   transition: transform 0.2s;
   margin-bottom: 10px;
 }
@@ -661,19 +670,25 @@ html, body {
 
 <!-- DAY SELECTOR -->
 <div class="day-overlay" id="dayOverlay">
-  <div class="day-sheet">
-    <div class="day-sheet-title">Додати до туру</div>
+  <div class="day-sheet" style="padding-bottom: 24px;">
+    <div class="day-sheet-title" style="margin-bottom: 24px; font-size: 20px;">Додати до туру</div>
     <div id="dayOptions"></div>
-    <button class="day-cancel" onclick="closeDaySelector()">Скасувати</button>
+    <div class="time-actions" style="margin-top: 16px;">
+      <button class="tbtn tbtn-cancel" onclick="closeDaySelector()">скасувати</button>
+      <button class="tbtn tbtn-close" onclick="confirmDaySelection()">додати</button>
+    </div>
   </div>
 </div>
 
 <!-- TIME SELECTOR -->
 <div class="day-overlay" id="timeOverlay">
-  <div class="day-sheet">
-    <div class="day-sheet-title">Час початку туру</div>
+  <div class="day-sheet" style="padding-bottom: 24px;">
+    <div class="day-sheet-title" style="margin-bottom: 24px; font-size: 20px;">Час початку туру</div>
     <div class="time-grid" id="timeOptions"></div>
-    <button class="day-cancel" onclick="closeTimePicker()">Скасувати</button>
+    <div class="time-actions">
+      <button class="tbtn tbtn-cancel" onclick="closeTimePicker()">скасувати</button>
+      <button class="tbtn tbtn-close" onclick="saveAndCloseTimePicker()">закрити</button>
+    </div>
   </div>
 </div>
 
@@ -702,12 +717,12 @@ html, body {
     <div>
       <div class="onboarding-title">Наш особистий бот для складання плану вихідних у Львові</div>
       <div class="onboarding-body">
-        В ньому зібрані цікаві локації міста.<br><br>
-        За тобою залишається лише вибір.<br><br>
-        Складай план дня та насолоджуйся відпочинком
+        <p>В ньому зібрані цікаві локації міста.</p>
+        <p>За тобою залишається лише вибір.</p>
+        <p>Складай план дня та насолоджуйся відпочинком</p>
       </div>
     </div>
-    <button class="onboarding-btn" onclick="closeOnboarding()">зрозумило</button>
+    <button class="onboarding-btn" onclick="closeOnboarding()">Зрозуміло</button>
   </div>
 </div>
 
@@ -762,6 +777,8 @@ async function loadPlaces() {
   }
   console.log("Total places in memory:", allPlaces.length);
   renderPlaces();
+  renderFavs();
+  renderFavSlots();
 }
 
 function showErr() {
@@ -947,13 +964,14 @@ function saveToCloud() {
     dayTimes: dayTimes,
     hasSeenOnboarding: hasSeenOnboarding
   });
-  if (!tg || !tg.CloudStorage) {
-    localStorage.setItem("pedovki_data", data);
-    return;
+  
+  localStorage.setItem("pedovki_data", data);
+
+  if (tg && tg.CloudStorage && typeof tg.CloudStorage.setItem === 'function') {
+    tg.CloudStorage.setItem("pedovki_data", data, (err) => {
+      if (err) console.error("CloudStorage save error:", err);
+    });
   }
-  tg.CloudStorage.setItem("pedovki_data", data, (err) => {
-    if (err) console.error("CloudStorage save error:", err);
-  });
 }
 
 function loadFromCloud(callback) {
@@ -973,8 +991,9 @@ function loadFromCloud(callback) {
     callback();
   };
 
+  const local = localStorage.getItem("pedovki_data");
+
   if (!tg || !tg.CloudStorage || typeof tg.CloudStorage.getItem !== 'function') {
-    const local = localStorage.getItem("pedovki_data");
     finish(local);
     return;
   }
@@ -984,7 +1003,7 @@ function loadFromCloud(callback) {
     if (!called) {
       console.warn("CloudStorage.getItem timed out");
       called = true;
-      callback();
+      finish(local);
     }
   }, 1500);
 
@@ -993,14 +1012,14 @@ function loadFromCloud(callback) {
       if (called) return;
       called = true; clearTimeout(timeout);
       if (!err && value) finish(value);
-      else finish(localStorage.getItem("pedovki_data"));
+      else finish(local);
     });
   } catch(e) {
     console.error("CloudStorage exception:", e);
     if (!called) {
       called = true;
       clearTimeout(timeout);
-      callback();
+      finish(local);
     }
   }
 }
@@ -1194,30 +1213,50 @@ function distanceKm(lat1, lng1, lat2, lng2) {
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 }
 
+let tempDayIdx = null;
+
 function openDaySelector(idx) {
   pendingAddIdx = idx;
-  const p = allPlaces[idx];
+  tempDayIdx = null;
+  renderDayOptions();
+  document.getElementById("dayOverlay").classList.add("open");
+}
+
+function renderDayOptions() {
   const opts = document.getElementById("dayOptions");
   opts.innerHTML = DAY_LABELS.map((label, day) => {
     const filled = tourPlaces[day].length;
-    const alreadyIn = tourPlaces[day].includes(idx);
+    const alreadyIn = tourPlaces[day].includes(pendingAddIdx);
     const full = filled >= 3;
     const disabled = alreadyIn || full;
     const dots = [0,1,2].map(i =>
       `<div class="day-dot ${i < filled ? "filled" : ""}"></div>`
     ).join("");
-    return `<div class="day-option ${disabled?"disabled":""}"
-      onclick="${disabled?"":"addToDay("+day+")"}">
+    return `<div class="day-option ${disabled?"disabled":""} ${tempDayIdx === day ? "active" : ""}"
+      onclick="${disabled?"":"selectTempDay("+day+")"}">
       <span>${label}${alreadyIn?" ✓":""}</span>
       <div class="day-dots">${dots}</div>
     </div>`;
   }).join("");
-  document.getElementById("dayOverlay").classList.add("open");
+}
+
+function selectTempDay(day) {
+  tempDayIdx = day;
+  renderDayOptions();
+}
+
+function confirmDaySelection() {
+  if (tempDayIdx !== null) {
+    addToDay(tempDayIdx);
+  } else {
+    // If user clicked Add without selecting, maybe do nothing or error
+  }
 }
 
 function closeDaySelector() {
   document.getElementById("dayOverlay").classList.remove("open");
   pendingAddIdx = -1;
+  tempDayIdx = null;
 }
 
 function addToDay(day) {
@@ -1286,14 +1325,37 @@ function onSearchInput(val) {
 
 const TIME_OPTIONS = ["09:00", "13:00", "18:00", "20:00"];
 let lastDayIdx = 0;
+let tempTime = null;
+
 function openTimePicker(dayIdx = 0) {
   lastDayIdx = dayIdx;
-  const grid = document.getElementById("timeOptions");
-  grid.innerHTML = TIME_OPTIONS.map(t =>
-    `<div class="time-opt ${t === dayTimes[dayIdx] ? "active" : ""}" onclick="setStartTime('${t}')">${t}</div>`
-  ).join("");
+  tempTime = dayTimes[dayIdx] || TIME_OPTIONS[0];
+  renderTimeOptions();
   document.getElementById("timeOverlay").classList.add("open");
 }
+
+function renderTimeOptions() {
+  const grid = document.getElementById("timeOptions");
+  grid.innerHTML = TIME_OPTIONS.map(t =>
+    `<div class="time-opt ${t === tempTime ? "active" : ""}" onclick="selectTempTime('${t}')">${t}</div>`
+  ).join("");
+}
+
+function selectTempTime(t) {
+  tempTime = t;
+  renderTimeOptions();
+}
+
+function saveAndCloseTimePicker() {
+  if (tempTime) {
+    dayTimes[lastDayIdx] = tempTime;
+    renderFavSlots();
+    saveToCloud();
+    showToast("Час змінено на " + tempTime);
+  }
+  closeTimePicker();
+}
+
 function closeTimePicker() {
   const ov = document.getElementById("timeOverlay");
   const sh = ov.querySelector(".day-sheet");
@@ -1305,26 +1367,10 @@ function closeTimePicker() {
   }, 300);
 }
 
-function setStartTime(t) {
-  dayTimes[lastDayIdx] = t;
-  renderFavSlots();
-  saveToCloud();
-  
-  const opts = document.querySelectorAll(".time-opt");
-  opts.forEach(o => o.classList.toggle("active", o.textContent === t));
-  
-  showToast("Час змінено на " + t);
-  
-  setTimeout(() => {
-    closeTimePicker();
-  }, 150);
-}
-
 // При открытии: сначала грузим сохранённые данные из Telegram CloudStorage,
 // потом загружаем места из Google Sheets
 loadFromCloud(() => {
   loadPlaces();
-  renderFavSlots();
   showOnboarding();
 });
 </script>
