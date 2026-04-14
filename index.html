@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Pedovki Tour</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+:root {
+  --bg: #FFF8F0;
+  --bg2: #FFF0F5;
+  --surface: #FFFFFF;
+  --pink: #FF4D8D;
+  --pink-light: #FFE0ED;
+  --pink-mid: #FFB3D1;
+  --green: #72B560;
+  --green-light: #EAF7E4;
+  --yellow: #FFB800;
+  --yellow-light: #FFF8E1;
+  --purple: #9C6FE4;
+  --purple-light: #F0E8FF;
+  --orange: #FF6B35;
+  --orange-light: #FFF0EB;
+  --text: #260A18;
+  --text2: #888;
+  --text3: #BBB;
+  --border: #F0E8EE;
+  --star: #FFB800;
+  --pin: #FF4D8D;
+  --r: 16px;
+  --r-sm: 10px;
+}
+
+html, body {
+  background: var(--bg);
+  font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+  min-height: 100vh;
+  overscroll-behavior: none;
+  color: var(--text);
+}
+
+/* ── TYPOGRAPHY ── */
+/* Великі заголовки → Tenor Sans */
+.page-title h1,
+.section-title,
+.nav-title,
+.detail-page-title,
+.day-sheet-title {
+  font-family: 'Tenor Sans', sans-serif;
+}
+
+/* Назви карточок, малі заголовки, чіпи → Playfair Display */
+.place-name,
+.fav-name,
+.detail-name,
+.tour-day-title,
+.filter-pill,
+.sub-pill,
+.day-option {
+  font-family: 'Playfair Display', serif;
+}
+
+.app { max-width: 390px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
+
+/* NAV BAR */
+.navbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 54px 20px 12px;
+  background: var(--bg);
+  position: sticky; top: 0; z-index: 20;
+}
+.nav-back { display: none; }
+.nav-title { font-size: 17px; font-weight: 600; color: var(--text); }
+.nav-done { display: none; }
+
+/* HOME SCREEN */
+.screen { flex: 1; padding: 0 20px 100px; overflow-y: auto; display: none; }
+.screen.active { display: block; }
+
+.page-title {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 18px;
+}
+.page-title h1 { font-size: 22px; font-weight: 700; color: var(--text); }
+.grid-icon { font-size: 20px; color: var(--pink); }
+
+/* CATEGORY GRID */
+.cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 28px; }
+
+.cat-card {
+  border-radius: var(--r);
+  padding: 20px 16px 16px;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  cursor: pointer; transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  min-height: 140px; justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+.cat-card:active { transform: scale(0.95); }
+.cat-icon-circle {
+  width: 72px; height: 72px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.cat-name { font-size: 14px; font-weight: 700; }
+
+.cat-food { background: #FFF3D0; }
+.cat-food .cat-icon-circle { background: #FFE082; border: 2.5px solid #F5C040; }
+.cat-food .cat-icon-circle i { color: #FF3D2F; }
+.cat-food .cat-name { color: #FF3D2F; }
+
+.cat-walk { background: #DEFFBF; }
+.cat-walk .cat-icon-circle { background: #D0FFA4; border: 2.5px solid #9BED8C; }
+.cat-walk .cat-icon-circle i { color: #00C217; }
+.cat-walk .cat-name { color: #00C217; }
+
+.cat-see { background: #FFF0F6; }
+.cat-see .cat-icon-circle { background: #FFB3D1; border: 2.5px solid #FF8DB8; }
+.cat-see .cat-icon-circle i { color: #C0206A; }
+.cat-see .cat-name { color: #C0206A; }
+
+.cat-photo { background: #F5EEFF; }
+.cat-photo .cat-icon-circle { background: #DBC8FF; border: 2.5px solid #BE96E4; }
+.cat-photo .cat-icon-circle i { color: #6030B8; }
+.cat-photo .cat-name { color: #6030B8; }
+
+/* FAVORITES SECTION */
+.section-title { font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 12px; }
+.tour-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; margin-top: 24px; }
+.time-btn { 
+  background: var(--pink-light); color: var(--pink); 
+  padding: 4px 10px; border-radius: 100px;
+  display: flex; align-items: center; gap: 5px;
+  font-size: 12px; font-weight: 700; cursor: pointer;
+}
+.section-sub { font-size: 13px; color: var(--text2); margin-bottom: 12px; }
+.section-sub span { color: var(--pink); }
+
+.fav-row {
+  display: flex; gap: 12px;
+  overflow-x: auto; scrollbar-width: none;
+  padding: 4px 0 16px;
+  margin-bottom: 8px;
+  -webkit-overflow-scrolling: touch;
+}
+.fav-row::-webkit-scrollbar { display: none; }
+
+.fav-slot {
+  flex: 0 0 160px;
+  aspect-ratio: 4 / 5;
+  border-radius: 12px;
+  background: var(--pink-light);
+  border: 1.5px dashed var(--pink-mid);
+  display: flex; flex-direction: column;
+  position: relative; overflow: hidden;
+  transition: all 0.2s;
+}
+
+/* CATALOG SCREEN */
+.cat-filters {
+  display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none;
+  padding-bottom: 8px; margin-bottom: 8px;
+}
+.cat-filters::-webkit-scrollbar { display: none; }
+
+.filter-pill {
+  flex-shrink: 0; padding: 7px 16px; border-radius: 100px;
+  border: 1.5px solid var(--border);
+  font-size: 13px; font-weight: 500; color: var(--text2);
+  cursor: pointer; white-space: nowrap; background: var(--surface);
+  transition: all 0.2s;
+}
+.filter-pill.active { background: var(--pink); border-color: var(--pink); color: #fff; }
+
+.sub-filters {
+  display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none;
+  padding-bottom: 12px;
+}
+.sub-filters::-webkit-scrollbar { display: none; }
+.sub-pill {
+  flex-shrink: 0; padding: 5px 14px; border-radius: 100px;
+  border: 1.5px solid var(--border);
+  font-size: 12px; color: var(--text2); cursor: pointer; white-space: nowrap;
+  background: var(--surface); transition: all 0.2s;
+}
+.sub-pill.active { background: var(--pink-light); border-color: var(--pink); color: var(--pink); }
+
+/* PLACE LIST */
+.places-list { display: flex; flex-direction: column; gap: 10px; }
+
+.place-row {
+  background: var(--surface); border-radius: 16px;
+  border: 1px solid var(--border);
+  display: flex; align-items: stretch; gap: 14px;
+  padding: 12px; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  margin-bottom: 12px;
+}
+.place-row:active { transform: scale(0.98); background: #fdfdfd; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+
+.place-thumb {
+  width: 100px; height: 100px; border-radius: 12px;
+  flex-shrink: 0; display: flex; align-items: center;
+  justify-content: center; font-size: 36px;
+  background: var(--bg2);
+  overflow: hidden;
+}
+
+.place-body { flex: 1; min-width: 0; }
+.place-name { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.place-addr { font-size: 12px; color: var(--text2); margin-bottom: 5px; display: flex; align-items: center; gap: 4px; }
+.pin-dot { color: var(--pin); font-size: 13px; line-height:1; }
+.place-meta { display: flex; align-items: center; gap: 8px; }
+.stars { color: var(--star); font-size: 12px; line-height:1; }
+.rating-val { font-size: 11px; font-weight: 600; color: var(--text); }
+.dist-val { font-size: 11px; color: var(--text2); }
+.price-tag {
+  font-size: 10px; font-weight: 600; padding: 2px 7px;
+  border-radius: 5px; background: var(--pink-light); color: var(--pink);
+}
+
+.place-actions { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; }
+.act-btn {
+  width: 32px; height: 32px; border-radius: 8px; border: none; font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; cursor: pointer; transition: all 0.18s;
+  background: var(--pink-light);
+}
+.act-btn:active { transform: scale(0.88); }
+.act-btn.add { background: var(--purple-light); }
+.act-btn.fav.active { background: var(--pink); }
+
+/* FAVORITES SCREEN */
+.fav-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+.fav-row-item {
+  background: var(--surface); border-radius: var(--r);
+  display: flex; align-items: center; gap: 12px; padding: 10px;
+  border: 1px solid var(--border);
+}
+.fav-thumb { width: 60px; height: 60px; border-radius: 10px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+.fav-body { flex: 1; min-width: 0; }
+.fav-name { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+.fav-addr { font-size: 12px; color: var(--text2); }
+.fav-meta { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
+.fav-actions { display: flex; flex-direction: column; gap: 6px; }
+.fav-heart { width: 32px; height: 32px; border-radius: 50%; background: var(--pink); border: none; display: flex; align-items: center; justify-content: center; font-size: 15px; cursor: pointer; }
+.fav-del { width: 32px; height: 32px; border-radius: 8px; background: var(--pink-light); border: none; display: flex; align-items: center; justify-content: center; font-size: 13px; cursor: pointer; color: var(--pink); }
+
+.all-fav-btn {
+  width: 100%; padding: 12px; border-radius: var(--r);
+  background: var(--pink); border: none; color: #fff;
+  font-size: 14px; font-weight: 600; cursor: pointer; margin-bottom: 24px;
+  font-family: inherit;
+}
+
+.tour-day { margin-bottom: 20px; }
+.tour-day-title { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.tour-day-sub { font-size: 11px; color: var(--text2); margin-bottom: 10px; }
+.tour-day-sub span { color: var(--pink); font-size: 11px; }
+.tour-slots { display: flex; gap: 10px; }
+.tour-slot {
+  flex: 1; height: 80px; border-radius: var(--r-sm);
+  border: 2px dashed var(--pink-mid); background: var(--pink-light);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; color: var(--pink-mid); cursor: pointer;
+  position: relative; overflow: hidden;
+}
+.tour-slot.filled { border: none; }
+.tour-slot .ts-name { position: absolute; bottom: 5px; left: 5px; right: 5px; font-size: 9px; font-weight: 600; color: #fff; }
+.tour-slot .ts-del { position: absolute; top: 4px; right: 4px; background: rgba(255,255,255,0.3); border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; font-size: 9px; color: #fff; cursor: pointer; }
+
+/* DETAIL MODAL */
+.detail-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.35);
+  display: none; align-items: flex-end; z-index: 100;
+}
+.detail-overlay.open { display: flex; animation: fin 0.2s; }
+@keyframes fin { from{opacity:0} to{opacity:1} }
+
+.detail-sheet {
+  background: var(--bg); width: 100%; border-radius: 20px 20px 0 0;
+  max-height: 92vh; overflow-y: auto;
+  animation: sup 0.3s cubic-bezier(0.32,0.72,0,1);
+}
+@keyframes sup { from{transform:translateY(100%)} to{transform:translateY(0)} }
+@keyframes sdn { from{transform:translateY(0)} to{transform:translateY(100%)} }
+.day-sheet.closing, .detail-sheet.closing { animation: sdn 0.3s cubic-bezier(0.32,0.72,0,1) forwards; }
+.day-overlay.closing { animation: fout 0.3s forwards; }
+@keyframes fout { from{opacity:1} to{opacity:0} }
+
+.detail-nav {
+  display: flex; align-items: center; padding: 16px 20px 0;
+  position: sticky; top: 0; background: var(--bg); z-index: 2;
+}
+.detail-back { color: var(--pink); font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 4px; cursor: pointer; }
+.detail-page-title { font-size: 16px; font-weight: 600; color: var(--text); margin: 0 auto; }
+
+.detail-hero {
+  width: calc(100% - 40px); margin: 16px 20px;
+  height: 220px; border-radius: var(--r);
+  display: flex; align-items: center; justify-content: center; font-size: 60px;
+}
+
+.detail-body { padding: 0 20px 20px; }
+.detail-name { font-size: 24px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.detail-rating { display: flex; align-items: center; gap: 8px; margin-bottom: 20px; }
+.detail-stars { color: var(--star); font-size: 16px; }
+.detail-rating-val { font-size: 15px; font-weight: 600; }
+.detail-price { font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 6px; background: var(--pink-light); color: var(--pink); }
+
+.detail-info { display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px; }
+.info-row { display: flex; gap: 12px; align-items: flex-start; }
+.info-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.info-block { flex: 1; }
+.info-label { font-size: 12px; color: var(--text2); margin-bottom: 2px; }
+.info-value { font-size: 14px; color: var(--text); }
+.info-link { font-size: 14px; color: #007AFF; }
+
+.detail-about-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.detail-about-text { font-size: 14px; color: var(--text2); line-height: 1.6; margin-bottom: 24px; }
+
+.detail-btns { display: flex; gap: 12px; }
+.dbtn {
+  flex: 1; height: 52px; border-radius: var(--r); border: none;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; cursor: pointer; transition: all 0.2s;
+}
+.dbtn:active { transform: scale(0.96); }
+.dbtn-add { background: var(--purple-light); }
+.dbtn-fav { background: var(--pink-light); }
+.dbtn-fav.active { background: var(--pink); }
+.dbtn-close { background: #FFE5E5; }
+
+/* BOTTOM NAV */
+.bottom-nav {
+  display: flex; background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 10px 0 28px;
+  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 390px; z-index: 10;
+}
+.bnav-item {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;
+  cursor: pointer; padding: 2px 0;
+}
+.bnav-icon { font-size: 22px; }
+.bnav-label { font-size: 10px; color: var(--text3); font-weight: 500; }
+.bnav-item.active .bnav-label { color: var(--pink); }
+
+/* LOADING */
+.loader { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; gap: 14px; }
+.spinner { width: 28px; height: 28px; border-radius: 50%; border: 2.5px solid var(--pink-light); border-top-color: var(--pink); animation: spin 0.7s linear infinite; }
+@keyframes spin { to{transform:rotate(360deg)} }
+.loader-text { font-size: 14px; color: var(--text2); }
+
+.err { text-align: center; padding: 50px 20px; font-size: 14px; color: var(--text2); }
+.err-icon { font-size: 32px; margin-bottom: 12px; }
+
+.place-thumb img { width:100%; height:100%; object-fit:cover; border-radius:10px; display:block; }
+.detail-hero img { width:100%; height:100%; object-fit:cover; border-radius:var(--r); display:block; }
+
+/* CATEGORY THEME */
+:root { --cat-color: #FF4D8D; --cat-light: #FFE0ED; --bg-page: #FFF8F0; }
+.filter-pill.active { background: var(--cat-color) !important; border-color: var(--cat-color) !important; }
+.sub-pill.active { background: var(--cat-light) !important; border-color: var(--cat-color) !important; color: var(--cat-color) !important; }
+#screenCatalog { background: var(--bg-page); transition: background 0.4s; }
+
+
+/* DAY SELECTOR OVERLAY */
+.day-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.4); display:none; align-items:flex-end; z-index:200; }
+.day-overlay.open { display:flex; animation: fin 0.2s; }
+.day-sheet { background:#fff; width:100%; max-width:390px; margin:0 auto;
+  border-radius:20px 20px 0 0; padding:20px 20px 32px; }
+.day-sheet-title { font-size:17px; font-weight:700; color:var(--text); margin-bottom:16px; text-align:center; }
+.day-option { display:flex; align-items:center; justify-content:space-between;
+  padding:14px 16px; border-radius:12px; background:var(--pink-light); margin-bottom:10px;
+  cursor:pointer; font-size:15px; font-weight:500; color:var(--text); transition:opacity 0.15s; }
+.day-option:active { opacity:0.75; }
+.day-option.disabled { opacity:0.4; cursor:default; }
+.day-dots { display:flex; gap:5px; }
+.day-dot { width:9px; height:9px; border-radius:50%; background:var(--pink-mid); }
+.day-dot.filled { background:var(--pink); }
+.day-cancel { width:100%; padding:14px; border-radius:12px; border:none;
+  background:#F2F2F7; color:var(--text); font-size:15px; font-weight:500;
+  cursor:pointer; margin-top:4px; font-family:'Playfair Display', serif; }
+/* TOAST */
+.toast {
+  position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: #1A1A1A; color: #fff; font-size: 14px; font-weight: 500;
+  padding: 10px 18px; border-radius: 20px; white-space: nowrap;
+  opacity: 0; pointer-events: none; z-index: 999;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.time-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+.time-opt { padding: 14px; border-radius: 12px; background: var(--pink-light); text-align: center; color: var(--pink); font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 15px; }
+.time-opt:active { transform: scale(0.95); opacity: 0.8; }
+.time-opt.active { background: var(--pink); color: #fff; }
+
+.day-header { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; margin-bottom: 8px; }
+.day-title { font-size: 16px; font-weight: 600; color: var(--text); font-family: 'Playfair Display', serif; }
+.day-hint { font-size: 11px; color: var(--pink); margin-bottom: 10px; margin-top: -4px; }
+.day-time-chip {
+  background: var(--pink-light); color: var(--pink);
+  padding: 4px 10px; border-radius: 100px;
+  display: flex; align-items: center; gap: 5px;
+  font-size: 12px; font-weight: 700; cursor: pointer;
+  transition: all 0.2s;
+}
+.day-time-chip:active { transform: scale(0.92); opacity: 0.8; }
+
+/* SEARCH */
+.search-box {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  margin-bottom: 20px;
+  gap: 10px;
+  transition: border-color 0.2s;
+}
+.search-box:focus-within { border-color: var(--pink); }
+.search-box i { color: var(--text3); font-size: 18px; }
+.search-box input {
+  border: none;
+  background: none;
+  outline: none;
+  flex: 1;
+  font-size: 14px;
+  color: var(--text);
+  font-family: inherit;
+}
+
+/* ONBOARDING MODAL */
+.onboarding-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+  display: none; align-items: center; justify-content: center; z-index: 1000;
+  padding: 20px;
+}
+.onboarding-overlay.open { display: flex; animation: fin 0.2s; }
+.onboarding-modal {
+  width: 100%; max-width: 341px; height: 464px;
+  background-color: #FFEAA2;
+  background-image: url('onboarding_bg.png');
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
+  border: 1px solid #FFFFFF;
+  padding: 40px 24px;
+  display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  position: relative;
+  color: #3E2021;
+}
+.onboarding-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; font-weight: 900; line-height: 0.95; letter-spacing: -0.6px;
+  margin-bottom: 24px; margin-top: 30px;
+  color: rgba(38, 10, 24, 0.8);
+}
+.onboarding-body {
+  font-family: 'Playfair Display', serif;
+  font-size: 14px; font-weight: 500; line-height: normal;
+  color: rgba(135, 8, 8, 0.8);
+}
+.onboarding-btn {
+  background: #3E2021; color: #FFFFFF;
+  border-radius: 100px; padding: 14px 40px;
+  border: none; font-size: 14px; font-weight: 600;
+  cursor: pointer; text-transform: lowercase;
+  transition: transform 0.2s;
+  margin-bottom: 10px;
+}
+.onboarding-btn:active { transform: scale(0.95); }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="navbar">
+    <div class="nav-back" id="navBack" onclick="goBack()" style="visibility:hidden"></div>
+    <div class="nav-title">Pedovochki tour</div>
+    <div class="nav-done"></div>
+  </div>
+
+  <!-- HOME SCREEN -->
+  <div class="screen active" id="screenHome">
+    <div class="page-title">
+      <h1>Каталог місць</h1>
+      <span class="grid-icon"><i class="ph-bold ph-squares-four"></i></span>
+    </div>
+
+    <div class="cat-grid">
+      <div class="cat-card cat-food" onclick="openCatalog('cafe')">
+        <div class="cat-icon-circle"><i class="ph-bold ph-fork-knife"></i></div>
+        <div class="cat-name">Поїсти</div>
+      </div>
+      <div class="cat-card cat-walk" onclick="openCatalog('park')">
+        <div class="cat-icon-circle"><i class="ph-bold ph-person-simple-walk"></i></div>
+        <div class="cat-name">Погуляти</div>
+      </div>
+      <div class="cat-card cat-see" onclick="openCatalog('museum')">
+        <div class="cat-icon-circle"><i class="ph-bold ph-image"></i></div>
+        <div class="cat-name">Подивитися</div>
+      </div>
+      <div class="cat-card cat-photo" onclick="openCatalog('photo')">
+        <div class="cat-icon-circle"><i class="ph-bold ph-camera"></i></div>
+        <div class="cat-name">Пофоткатися</div>
+      </div>
+    </div>
+
+    <div class="tour-header">
+      <div class="section-title" style="margin-bottom:0">Мої фаворити для туру</div>
+    </div>
+
+    <div class="fav-row" id="homeFavRow0"></div>
+    <div class="fav-row" id="homeFavRow1"></div>
+    <div class="fav-row" id="homeFavRow2"></div>
+  </div>
+
+  <!-- CATALOG SCREEN -->
+  <div class="screen" id="screenCatalog">
+    <div class="page-title">
+      <h1>Каталог закладів</h1>
+    </div>
+
+    <div class="search-box">
+      <i class="ph ph-magnifying-glass"></i>
+      <input type="text" id="searchInput" placeholder="Пошук за назвою або адресою..." oninput="onSearchInput(this.value)">
+    </div>
+
+    <div class="cat-filters" id="catFilters">
+      <div class="filter-pill" data-cat="cafe" onclick="setCat(this)">Поїсти</div>
+      <div class="filter-pill" data-cat="park" onclick="setCat(this)">Погуляти</div>
+      <div class="filter-pill" data-cat="museum" onclick="setCat(this)">Подивитися</div>
+      <div class="filter-pill" data-cat="photo" onclick="setCat(this)">Пофоткатися</div>
+    </div>
+
+    <div class="sub-filters" id="subFilters">
+      <div class="sub-pill active" onclick="setSubFilter('all',this)">Все</div>
+      <div class="sub-pill" onclick="setSubFilter('near',this)">Поруч</div>
+      <div class="sub-pill" onclick="setSubFilter('favs',this)">Улюблені</div>
+      <div class="sub-pill" onclick="setSubFilter('tour',this)">Тур</div>
+    </div>
+
+    <div class="places-list" id="placesList">
+      <div class="loader"><div class="spinner"></div><div class="loader-text">Завантажуємо...</div></div>
+    </div>
+
+    <div class="section-title" style="margin-top:28px">Мої фаворити для туру</div>
+    <div class="fav-row" id="catalogFavRow0"></div>
+    <div class="fav-row" id="catalogFavRow1"></div>
+    <div class="fav-row" id="catalogFavRow2"></div>
+  </div>
+
+  <!-- FAVORITES SCREEN -->
+  <div class="screen" id="screenFavs">
+    <div class="page-title"><h1>Улюблені</h1></div>
+
+    <div class="sub-filters" style="margin-bottom:16px">
+      <div class="sub-pill active" id="favsTabFavs" onclick="showFavsTab('favs',this)">Улюблені</div>
+      <div class="sub-pill" id="favsTabTour" onclick="showFavsTab('tour',this)">Тур</div>
+    </div>
+
+    <div id="favsSection">
+      <div class="fav-list" id="favList">
+        <div class="err"><div class="err-icon"><i class="ph ph-heart"></i></div>Ще немає улюблених місць</div>
+      </div>
+      <button class="all-fav-btn" id="allFavBtn">Всі 0 улюблених</button>
+    </div>
+
+    <div id="tourSection" style="display:none">
+      <div class="section-title" style="margin-bottom:16px">Мої фаворити для туру</div>
+
+      <div class="tour-day">
+        <div class="tour-day-title">Початок дня:</div>
+        <div class="tour-day-sub" id="favTourSub0"><span>поки що не обрано</span></div>
+        <div class="fav-row" id="favTourRow0" style="margin-bottom:20px">
+          <div class="fav-slot">+</div><div class="fav-slot">+</div><div class="fav-slot">+</div>
+        </div>
+      </div>
+      <div class="tour-day">
+        <div class="tour-day-title">Середина дня:</div>
+        <div class="tour-day-sub" id="favTourSub1"><span>поки що не обрано</span></div>
+        <div class="fav-row" id="favTourRow1" style="margin-bottom:20px">
+          <div class="fav-slot">+</div><div class="fav-slot">+</div><div class="fav-slot">+</div>
+        </div>
+      </div>
+      <div class="tour-day">
+        <div class="tour-day-title">Кінець дня:</div>
+        <div class="tour-day-sub" id="favTourSub2"><span>поки що не обрано</span></div>
+        <div class="fav-row" id="favTourRow2" style="margin-bottom:20px">
+          <div class="fav-slot">+</div><div class="fav-slot">+</div><div class="fav-slot">+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL MODAL -->
+<div class="detail-overlay" id="detailOverlay">
+  <div class="detail-sheet">
+    <div class="detail-nav">
+      <div class="detail-back" onclick="closeDetail()">‹ Деталі</div>
+    </div>
+    <div class="detail-hero" id="dHero"></div>
+    <div class="detail-body">
+      <div class="detail-name" id="dName"></div>
+      <div class="detail-rating">
+        <div class="detail-stars" id="dStars"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+        <div class="detail-rating-val" id="dRating"></div>
+        <div class="detail-price" id="dPrice"></div>
+      </div>
+      <div class="detail-info">
+        <div class="info-row">
+          <div class="info-icon"><i class="ph-fill ph-map-pin" style="color:var(--pin)"></i></div>
+          <div class="info-block">
+            <div class="info-label">Адреса</div>
+            <div id="dAddrLine" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <div class="info-value" id="dAddr"></div>
+              <div class="info-link" id="dDist"></div>
+            </div>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon"><i class="ph ph-clock" style="color:var(--text2)"></i></div>
+          <div class="info-block">
+            <div class="info-label">Час роботи</div>
+            <div class="info-value" id="dHours"></div>
+          </div>
+        </div>
+        <div class="info-row" id="dSocialRow">
+          <div class="info-icon"><i class="ph ph-instagram-logo" style="color:var(--text2)"></i></div>
+          <div class="info-block">
+            <div class="info-label">Соціальні мережі закладу</div>
+            <div class="info-link" id="dSocial"></div>
+          </div>
+        </div>
+      </div>
+      <div class="detail-about-title">Про заклад</div>
+      <div class="detail-about-text" id="dDesc"></div>
+      <div class="detail-btns">
+        <button class="dbtn dbtn-add" id="dBtnAdd" onclick="addToTour()"><i class="ph-bold ph-plus"></i></button>
+        <button class="dbtn dbtn-fav" id="dBtnFav" onclick="toggleFavDetail()"><i class="ph ph-heart"></i></button>
+        <button class="dbtn dbtn-close" onclick="closeDetail()"><i class="ph-bold ph-x"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DAY SELECTOR -->
+<div class="day-overlay" id="dayOverlay">
+  <div class="day-sheet">
+    <div class="day-sheet-title">Додати до туру</div>
+    <div id="dayOptions"></div>
+    <button class="day-cancel" onclick="closeDaySelector()">Скасувати</button>
+  </div>
+</div>
+
+<!-- TIME SELECTOR -->
+<div class="day-overlay" id="timeOverlay">
+  <div class="day-sheet">
+    <div class="day-sheet-title">Час початку туру</div>
+    <div class="time-grid" id="timeOptions"></div>
+    <button class="day-cancel" onclick="closeTimePicker()">Скасувати</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <div class="bnav-item active" id="bnav0" onclick="showScreen('home',0)">
+    <div class="bnav-icon"><i class="ph ph-house"></i></div>
+    <div class="bnav-label">Головна</div>
+  </div>
+  <div class="bnav-item" id="bnav1" onclick="showScreen('catalog',1)">
+    <div class="bnav-icon"><i class="ph ph-map-trifold"></i></div>
+    <div class="bnav-label">Каталог</div>
+  </div>
+  <div class="bnav-item" id="bnav2" onclick="showScreen('favs',2)">
+    <div class="bnav-icon"><i class="ph ph-heart"></i></div>
+    <div class="bnav-label">Улюблені</div>
+  </div>
+</div>
+
+<!-- ONBOARDING MODAL -->
+<div class="onboarding-overlay" id="onboardingOverlay">
+  <div class="onboarding-modal">
+    <div>
+      <div class="onboarding-title">Наш особистий бот для складання плану вихідних у Львові</div>
+      <div class="onboarding-body">
+        В ньому зібрані цікаві локації міста.<br><br>
+        За тобою залишається лише вибір.<br><br>
+        Складай план дня та насолоджуйся відпочинком
+      </div>
+    </div>
+    <button class="onboarding-btn" onclick="closeOnboarding()">зрозумило</button>
+  </div>
+</div>
+
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbxfbguXnlKDy6UTxYAkAQESNrwSoe32EYM3Q58EfeZimPjQotsRp9YBY-ArgQABf007eA/exec";
+
+const tg = window.Telegram && window.Telegram.WebApp;
+if (tg) { tg.ready(); tg.expand(); }
+
+let allPlaces = [];
+let favs = new Set();
+let tourPlaces = [[], [], []]; // 0=початок, 1=середина, 2=кінець
+let dayTimes = ["09:00", "13:00", "18:00"];
+let hasSeenOnboarding = false;
+let currentIdx = -1;
+let activeCat = "cafe";
+let activeSubFilter = "all";
+let pendingAddIdx = -1;
+let searchQuery = "";
+let userLat = null, userLng = null;
+const DAY_LABELS = ["Початок дня", "Середина дня", "Кінець дня"];
+const LVIV_CENTER = { lat: 49.8397, lng: 24.0297 };
+const CAT_COLOR = { cafe:"#FF6B35", park:"#72B560", museum:"#FF4D8D", photo:"#9C6FE4" };
+const CAT_LIGHT = { cafe:"#FFF3E8", park:"#EAF7E4", museum:"#FFE0ED", photo:"#F0E8FF" };
+const CAT_BG_PAGE = { cafe:"#FFFBF0", park:"#F3FAF0", museum:"#FFF5F8", photo:"#F7F3FF" };
+
+const CAT_BG = {
+  cafe: "#FFB800", park: "#72B560", museum: "#FF4D8D",
+  photo: "#9C6FE4", other: "#FF6B35"
+};
+const CAT_BG_LIGHT = {
+  cafe: "#FFF3E8", park: "#EAF7E4", museum: "#FFE0ED",
+  photo: "#F0E8FF", other: "#FFF0EB"
+};
+
+// Дані з таблиці (fallback якщо API недоступне)
+const FALLBACK_PLACES = [
+  { id:"1 погуляти",   name:"Парк Івана Франка",      category:"park",            address:"вул. Університетська, 1",             price:"$",  map_url:"Ivan Franko Park",                                          rating:"4.9", open_hours:"08:00 - 22:00", description:"Великий парк у центрі Львова",        photo_url:"https://lh3.googleusercontent.com/gps-cs-s/APNQkAGGIpGx3RSzBb7auMmFgbk7XFqgZk2o5MeihxnBgmK21EcPnQ43DPrC8ZyZn9jEqvKql6JhB5NwAsM4yWEAjS2onifGIUdilTIjMOeYNGPp1b_vVIDhcTKrGALMSMs7Wan6awA=w408-h306-k-no" },
+  { id:"2 погуляти",   name:"Ботанічний сад ЛНУ",      category:"park",            address:"вул. Черемщини, 44",                  price:"$",  map_url:"Lviv University Botanical Garden",                          rating:"4.4", open_hours:"10:00 - 18:00", description:null,                                  photo_url:"https://lh3.googleusercontent.com/gps-cs-s/APNQkAHxPdHV0tdvjwTdBSORFZD-w916K3I-GDgZhvTxYZ-QxAmUOzBaDdanL8J48aLC9uDTUL_81tev5N2ro2y7UlGZLbedZwfJUIXB7ZSFL8B5zjMX4VCkVBGwvxUnLGKMZHmJ_kcYWKlFMQ9g=w408-h306-k-no" },
+  { id:"3 погуляти",   name:"Личаківський цвинтар",    category:"park",            address:"вул. Мечникова, 33",                  price:"$",  map_url:"Lychakiv Cemetery",                                         rating:"4.8", open_hours:"09:00 - 18:00", description:"Тихе, малолюдне і дуже атмосферне місце.", photo_url:"https://lh3.googleusercontent.com/gps-cs-s/APNQkAE3-VjL_TpbBsE_lT4dUtze1aGwbHxHQjl6S5YCNgmRa0JUB6ZpFOqKNLp0CNCwSkujqEkJb9LZjSnjK7kcASUfYcCq_UleMz1mt-mKJ_ZWsgOTqKuTCUll0UOg0JZBZzK_nsxo969gO1=w408-h306-k-no" },
+  { id:"4 погуляти",   name:"Високий Замок",           category:"park",            address:"вул. Високий замок, 1",               price:"$",  map_url:"Park-Pam'yatka \"Vysokyy Zamok\"",                          rating:"4.7", open_hours:"05:00 - 23:00", description:null,                                  photo_url:"https://lh3.googleusercontent.com/gps-cs-s/APNQkAHp34nTH6DDFJs06I-icPAJcXz5A61BKXhpjVCHGVpdBa7h1nioAROrVsU5MA72DLwBu7MQUdFvD9ofw0vIrLbKXv2QlncQPbNxXG90ud39zpG_63kX63DfIqX0MwDE1kz52k15=w408-h306-k-no" },
+  { id:"5 погуляти",   name:"Шевченківський гай",      category:"park",            address:"вул. Чернеча Гора, 1",                price:"$",  map_url:"Shevchenkivsʹkyy Hay",                                      rating:"4.7", open_hours:"10:00 - 19:00", description:null,                                  photo_url:"https://lh3.googleusercontent.com/gps-cs-s/APNQkAEVU0LvC9y-QWdSHIBUr9NLhknDKa4xqfT5Qz7BNpN-wwA7HOvMkvOLoJ243DeWzvYQGvDzoYwdrAgjwHqNZ7IfZWzsz5SwdE5mrIsb8nB58treA6HYOijL2J1x4BEF_FzKYs5FMo1rcg9f=w426-h240-k-no" },
+  { id:"1 поїсти",     name:"Gallery Art Kitchen",     category:"cafe",            address:"вул. Шота Руставелі, 7",              price:"$$", map_url:"GALLERY - Art of Kitchen",                                  rating:"4.7", open_hours:"12:00 - 23:00", description:"Де їжа стає мистецтвом",             photo_url:"https://lh3.googleusercontent.com/gps-cs-s/APNQkAF8F0xYmYs-2LtEHSbF3S4JYUull_8K8QUVme7lfmN7MPB5QZHXXIig64sfSPj5dtR8pEIXQpB7Ec8xFr1EvXs3XK8DuJz0RyFT8mLI_9L5nNx1DgsBg1tArWHOTM_SAOkTW7otGfXNavBI=w408-h272-k-no" },
+  { id:"2 поїсти",     name:"Cafe Vitalnia",           category:"cafe",            address:"вул. Академіка Богомольця, 6/1",      price:"$$", map_url:"Cafe Vitalnia",                                             rating:"4.5", open_hours:"09:00 - 21:00", description:null,                                  photo_url:"https://lh3.googleusercontent.com/gps-cs-s/APNQkAFEpdSpYX0RQYUFSHTBbbD0ae_X1Lpi7jC-tXwxX-vmbOWnobLx84Cyz-ORwHibfKQRR6vi3WQOO4k5pNPWLyW6RSJ8zoyuRNUv7i9w5dT0a0v-6TSv3b2GybhNzEPAnhkNEsw2B4swQ1h-=w408-h612-k-no" },
+  { id:"3 поїсти",     name:"dakh.lviv",               category:"cafe",            address:"пл. Ринок, 15",                       price:"$",  map_url:"Dakh",                                                       rating:"4.3", open_hours:"10:00 - 22:00", description:null,                                  photo_url:"https://lh3.googleusercontent.com/gps-cs-s/APNQkAFsHQDGSGOe-kQlkLxyYrk-yB4KMZm0G3lOUKzvT7Cag9p9SKivzzW5xE-jUpNSdg6HbUq13QeM4FyuB680YMOBBc2ZIO6YKp_pTykZK240MJp49mEGqrBnDrCE6geAz6UTF6JDPpq4GtzA=w408-h486-k-no" },
+  { id:"4 поїсти",     name:"YOLO",                    category:"cafe",            address:"вул. Пасічна, 22",                    price:"$$", map_url:"YOLO",                                                       rating:"4.9", open_hours:"13:00 - 23:00", description:null,                                  photo_url:"https://lh3.googleusercontent.com/gps-cs-s/APNQkAFSfbXN7viLVcnWB8h1oyX4rROQUv9rIQuKZazU8IAIXhzE0LJ7JamTujLwwtTOIm_RHDhRqFXTqdeIw5V0ICE11WqKbhyXaVRttUK2YIBx26305YW1Kwgnaelyz1zWyv863Xw_VKiN2kOB=w408-h544-k-no" },
+  { id:"5 поїсти",     name:"respublika.sadu",         category:"cafe",            address:"вул. Володимира Винниченка, 20а",     price:"$",  map_url:"Respublika Sadu",                                            rating:"4.8", open_hours:"10:00 - 21:00", description:null,                                  photo_url:"https://lh3.googleusercontent.com/gps-cs-s/APNQkAF8bf85cpP3NQCJuB_cNY1phLZiH-hgvK70QR5S1eYkRK7AUbGslNMQzgEPsjQIqSehsTP2lYWkvYDgveZyyIy57qVj4SNUtgMauo6oN9scvui-vm0QC9xJyYJ9JOlDLspOUmbAyZDv=w408-h306-k-no" },
+  { id:"6 поїсти",     name:"Сицилійський Дворик",     category:"cafe/ photo-place", address:"вул. Богдана Хмельницького, 20",   price:"$$", map_url:"Сицилійський Дворик Pizza Lviv",                            rating:null,  open_hours:null,            description:null,                                  photo_url:"https://lh3.googleusercontent.com/gps-cs-s/APNQkAFyD6OFssQGt4s6-jmMqJH78ZC6c6caEYZPrZAn-8jngHrw_CgI_sLqvlk9B4FB1Jq-73c4ef5N24rHzw-F6OK4MIF_FzYGRmvd_VKiN2kOB=w408-h544-k-no" },
+  { id:"1 подивитися", name:"Zenyk Art Gallery",       category:"museum",          address:"вул. Шота Руставелі, 7",             price:"$",  map_url:"Zenyk Art Gallery",                                          rating:"4.3", open_hours:"10:00 - 19:00", description:null,                                  photo_url:"https://lh3.googleusercontent.com/gps-cs-s/APNQkAFkZR2SwDqRPzNOoCVGur1pn8BTCoqh4IYu0DZ1WnmjmSXWz2xtgyOvmYl-PY8RsVoj11gX9bsg7BCqy-tTdUDnVdl7tOwslBxTLc_ZSNe7xt--f_qW9Qx9AvHPAyam4Lqa9wYDvr9MSd0h=w408-h612-k-no" },
+  { id:"2 подивитися", name:"ЯГалерея",                category:"museum",          address:"вул. Шота Руставелі, 8",             price:"$",  map_url:"Arttsentr Pavla Hudimova \"Ya Halereya Lʹviv\"",            rating:"5.0", open_hours:"11:00 - 20:00", description:null,                                  photo_url:"https://lh3.googleusercontent.com/gps-cs-s/APNQkAESjQvFlVKSxWOgYggUzkOPcHVN1a7aaGMt4KvXQKHpWPJl_d0NEWqD-kDWn0ILyFZV1N8FUSIDuX6pxLmPxf2iLgv0Pima_lIQ9b6GqXTRDPbqkZayVmqlBM8Xjs1YBhEA7mUF=w408-h312-k-no" },
+  { id:"3 подивитися", name:"Львіварня пива",          category:"museum",          address:"вул. Клепарівська, 18",              price:"$$", map_url:"Muzeyno-Kulʹturnyy Kompleks Pyvnoyi Istoriyi - Lʹvivarnya", rating:"4.7", open_hours:"11:00 - 19:00", description:null,                                  photo_url:"https://lh3.googleusercontent.com/gps-cs-s/APNQkAEEXQW2Q7OIwkK4MsL2kSUX79tqQj_7t5BXlOvBk9hpZG5A1gXL16pFzUopGWkdc8AFjFarJbXgG6n4K4BbCAiLScrk1yXbjkSdxn257uQAqptK0imqaYqatnbwZc96XX1A4Bwe=w408-h271-k-no" },
+  { id:"1 пофоткатися",name:"Італійський дворик",      category:"photo-place",     address:"пл. Ринок, 6",                       price:null, map_url:"Italian Courtyard",                                          rating:null,  open_hours:null,            description:"Унікальна пам'ятка архітектури Ренесансу всередині Палацу Корнякта.", photo_url:null },
+  { id:"2 пофоткатися",name:"Під'їзд у житловому будинку", category:"photo-place", address:"вул. Русових, 1",                   price:null, map_url:"Rusovykh St, 1",                                            rating:null,  open_hours:null,            description:null,                                  photo_url:null }
+];
+
+async function loadPlaces() {
+  console.log("Loading places...");
+  try {
+    const res = await fetch(API_URL);
+    const json = await res.json();
+    if (json.ok && json.data && json.data.length) {
+      console.log("Loaded places from API:", json.data.length);
+      allPlaces = json.data.filter(p => p.name).map(p => ({ ...p, rawCategory: (p.category || "").trim(), category: normCat(p.category) }));
+    } else {
+      console.log("API returned no data, using fallback");
+      allPlaces = FALLBACK_PLACES.map(p => ({ ...p, rawCategory: (p.category || "").trim(), category: normCat(p.category) }));
+    }
+  } catch(e) {
+    console.error("Fetch error, using fallback:", e);
+    allPlaces = FALLBACK_PLACES.map(p => ({ ...p, rawCategory: (p.category || "").trim(), category: normCat(p.category) }));
+  }
+  console.log("Total places in memory:", allPlaces.length);
+  renderPlaces();
+}
+
+function showErr() {
+  document.getElementById("placesList").innerHTML =
+    `<div class="err"><div class="err-icon"><i class="ph ph-warning"></i></div>Не вдалося завантажити.<br>Перевір з'єднання.</div>`;
+}
+
+function parseRating(r) {
+  if (!r && r !== 0) return null;
+  const s = String(r).trim();
+  if (!s) return null;
+  const n = parseFloat(s);
+  if (!isNaN(n) && n >= 1 && n <= 5) return n.toFixed(1);
+  // Дати з Google Sheets (Excel-баг): рейтинг "4.9" зберігся як дата "4 вересня" → день=4, місяць=9
+  const d = new Date(s);
+  if (!isNaN(d.getTime())) return `${d.getDate()}.${d.getMonth() + 1}`;
+  return null;
+}
+
+function normCat(c) {
+  if (!c) return "other";
+  c = c.trim().toLowerCase();
+  if (c.includes("cafe") || c.includes("bar")) return "cafe";
+  if (c === "park") return "park";
+  if (c === "museum") return "museum";
+  if (c.includes("photo")) return "photo";
+  return "other";
+}
+
+function getCatIcon(cat) {
+  const map = {
+    cafe:   '<i class="ph-bold ph-fork-knife"></i>',
+    park:   '<i class="ph-bold ph-tree"></i>',
+    museum: '<i class="ph-bold ph-image"></i>',
+    photo:  '<i class="ph-bold ph-camera"></i>',
+    bar:    '<i class="ph-bold ph-wine"></i>'
+  };
+  return map[cat] || '<i class="ph-bold ph-map-pin"></i>';
+}
+// backward compat alias
+function getCatEmoji(cat) { return getCatIcon(cat); }
+
+function thumbHTML(p, vivid) {
+  const bg = vivid ? (CAT_BG[p.category] || "#FFB800") : (CAT_BG_LIGHT[p.category] || "#F5F5F5");
+  const icon = getCatIcon(p.category);
+  if (p.photo_url) {
+    return `<img src="${p.photo_url}" alt=""
+      onerror="imgErr(this, '${bg}', '${p.category}')"
+      style="width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block">`;
+  }
+  return icon;
+}
+
+function imgErr(img, bg, cat) {
+  const p = img.parentNode;
+  p.style.background = bg;
+  p.innerHTML = getCatIcon(cat);
+}
+
+function renderPlaces() {
+  let filtered = allPlaces.filter(p => {
+    const raw = (p.rawCategory || "").toLowerCase();
+    if (activeCat === "photo") return p.category === "photo" || p.category === "museum" || raw.includes("photo");
+    if (activeCat === "cafe") return p.category === "cafe" || p.category === "bar";
+    return p.category === activeCat;
+  });
+
+  if (activeSubFilter === "favs") {
+    filtered = filtered.filter(p => favs.has(allPlaces.indexOf(p)));
+  }
+
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    filtered = filtered.filter(p =>
+      (p.name && p.name.toLowerCase().includes(q)) ||
+      (p.address && p.address.toLowerCase().includes(q))
+    );
+  }
+
+  console.log(`Rendering ${filtered.length} places for cat: ${activeCat}, sub: ${activeSubFilter}, search: ${searchQuery}`);
+
+  if (!filtered.length) {
+    document.getElementById("placesList").innerHTML =
+      `<div class="err"><div class="err-icon"><i class="ph ph-magnifying-glass"></i></div>Нічого не знайдено</div>`;
+    return;
+  }
+
+  document.getElementById("placesList").innerHTML = filtered.map(p => {
+    const idx = allPlaces.indexOf(p);
+    const bg = CAT_BG[p.category] || "#FFB800";
+    const rating = parseRating(p.rating) || "–";
+    const isFav = favs.has(idx);
+    let distLabel = "";
+    if (activeSubFilter === "near" && userLat !== null) {
+      const km = distanceKm(userLat, userLng, LVIV_CENTER.lat, LVIV_CENTER.lng);
+      distLabel = `<span class="dist-val">${km.toFixed(1)} км від вас</span>`;
+    }
+    return `
+    <div class="place-row" onclick="openDetail(${idx})">
+      <div class="place-thumb" style="background:${bg};overflow:hidden">${thumbHTML(p, true)}</div>
+      <div class="place-body">
+        <div class="place-name">${p.name}</div>
+        <div class="place-addr"><span class="pin-dot"><i class="ph-fill ph-map-pin"></i></span>${p.address || p.district || ""}</div>
+        <div class="place-meta">
+          <span class="stars"><i class="ph-fill ph-star"></i></span>
+          <span class="rating-val">${rating}</span>
+          ${distLabel}
+          ${p.price ? `<span class="price-tag">${p.price}</span>` : ""}
+        </div>
+      </div>
+      <div class="place-actions">
+        <button class="act-btn add" onclick="event.stopPropagation();openDaySelector(${idx})"><i class="ph-bold ph-plus"></i></button>
+        <button class="act-btn fav ${isFav?'active':''}" onclick="event.stopPropagation();toggleFav(${idx},this)">${isFav?'<i class="ph-fill ph-heart"></i>':'<i class="ph ph-heart"></i>'}</button>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function setCat(el) {
+  document.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
+  el.classList.add("active");
+  activeCat = el.dataset.cat;
+  applyCategoryTheme(activeCat);
+  activeSubFilter = "all";
+  document.querySelectorAll("#subFilters .sub-pill").forEach((p,i) => p.classList.toggle("active", i === 0));
+  renderPlaces();
+}
+
+function openDetail(idx) {
+  const p = allPlaces[idx];
+  if (!p) return;
+  currentIdx = idx;
+  const bg = CAT_BG_LIGHT[p.category] || "#F5F5F5";
+  const emoji = getCatEmoji(p.category);
+  const rating = parseRating(p.rating) || "–";
+
+  document.getElementById("dHero").style.background = bg;
+  document.getElementById("dHero").style.overflow = "hidden";
+  document.getElementById("dHero").innerHTML = thumbHTML(p);
+  document.getElementById("dName").textContent = p.name;
+  document.getElementById("dRating").textContent = rating;
+  document.getElementById("dPrice").textContent = p.price || "";
+  document.getElementById("dAddr").textContent = p.address || "";
+  document.getElementById("dDist").textContent = p.distance ? p.distance + " від центру" : "";
+  document.getElementById("dHours").textContent = p.open_hours || "Уточнювати";
+  document.getElementById("dDesc").textContent = p.description || p.tip || "Опис скоро з'явиться";
+
+  const social = p.map_url || "";
+  if (social && social.includes("instagram")) {
+    document.getElementById("dSocial").textContent = "@" + (p.name || "").toLowerCase().replace(/\s/g,"").replace(/"/g,"");
+    document.getElementById("dSocialRow").style.display = "flex";
+  } else {
+    document.getElementById("dSocialRow").style.display = "none";
+  }
+
+  const isFav = favs.has(idx);
+  const btn = document.getElementById("dBtnFav");
+  btn.innerHTML = isFav ? '<i class="ph-fill ph-heart"></i>' : '<i class="ph ph-heart"></i>';
+  btn.className = "dbtn dbtn-fav" + (isFav ? " active" : "");
+
+  document.getElementById("detailOverlay").classList.add("open");
+}
+
+function closeDetail() {
+  document.getElementById("detailOverlay").classList.remove("open");
+}
+
+document.getElementById("detailOverlay").addEventListener("click", e => {
+  if (e.target === document.getElementById("detailOverlay")) closeDetail();
+});
+document.getElementById("dayOverlay").addEventListener("click", e => {
+  if (e.target === document.getElementById("dayOverlay")) closeDaySelector();
+});
+
+// ─── CLOUD STORAGE ───────────────────────────────────────────
+// Сохраняет фавориты и план тура в Telegram CloudStorage
+// Данные привязаны к аккаунту пользователя и сохраняются между сессиями
+
+function saveToCloud() {
+  const data = JSON.stringify({
+    favs: Array.from(favs),
+    tourPlaces: tourPlaces,
+    dayTimes: dayTimes,
+    hasSeenOnboarding: hasSeenOnboarding
+  });
+  if (!tg || !tg.CloudStorage) {
+    localStorage.setItem("pedovki_data", data);
+    return;
+  }
+  tg.CloudStorage.setItem("pedovki_data", data, (err) => {
+    if (err) console.error("CloudStorage save error:", err);
+  });
+}
+
+function loadFromCloud(callback) {
+  console.log("Checking CloudStorage...");
+  
+  const finish = (val) => {
+    if (val) {
+      try {
+        const data = JSON.parse(val);
+        if (data.favs) favs = new Set(data.favs);
+        if (data.tourPlaces) tourPlaces = data.tourPlaces;
+        if (data.dayTimes) dayTimes = data.dayTimes;
+        else if (data.startTime) dayTimes = [data.startTime, "13:00", "18:00"];
+        if (data.hasOwnProperty('hasSeenOnboarding')) hasSeenOnboarding = data.hasSeenOnboarding;
+      } catch(e) { console.error("Parse error:", e); }
+    }
+    callback();
+  };
+
+  if (!tg || !tg.CloudStorage || typeof tg.CloudStorage.getItem !== 'function') {
+    const local = localStorage.getItem("pedovki_data");
+    finish(local);
+    return;
+  }
+  
+  let called = false;
+  const timeout = setTimeout(() => {
+    if (!called) {
+      console.warn("CloudStorage.getItem timed out");
+      called = true;
+      callback();
+    }
+  }, 1500);
+
+  try {
+    tg.CloudStorage.getItem("pedovki_data", (err, value) => {
+      if (called) return;
+      called = true; clearTimeout(timeout);
+      if (!err && value) finish(value);
+      else finish(localStorage.getItem("pedovki_data"));
+    });
+  } catch(e) {
+    console.error("CloudStorage exception:", e);
+    if (!called) {
+      called = true;
+      clearTimeout(timeout);
+      callback();
+    }
+  }
+}
+function showOnboarding() {
+  if (!hasSeenOnboarding) {
+    document.getElementById("onboardingOverlay").classList.add("open");
+  }
+}
+
+function closeOnboarding() {
+  hasSeenOnboarding = true;
+  document.getElementById("onboardingOverlay").classList.remove("open");
+  saveToCloud();
+}
+// ─────────────────────────────────────────────────────────────
+
+let toastTimer = null;
+function showToast(msg) {
+  const el = document.getElementById("toast");
+  el.textContent = msg;
+  el.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove("show"), 2200);
+}
+
+function toggleFav(idx, btn) {
+  if (favs.has(idx)) { favs.delete(idx); btn.innerHTML = '<i class="ph ph-heart"></i>'; btn.classList.remove("active"); }
+  else { favs.add(idx); btn.innerHTML = '<i class="ph-fill ph-heart"></i>'; btn.classList.add("active"); showToast("Додано до улюблених"); }
+  renderFavs();
+  saveToCloud();
+}
+
+function toggleFavDetail() {
+  if (currentIdx < 0) return;
+  const btn = document.getElementById("dBtnFav");
+  if (favs.has(currentIdx)) {
+    favs.delete(currentIdx); btn.innerHTML = '<i class="ph ph-heart"></i>'; btn.className = "dbtn dbtn-fav";
+  } else {
+    favs.add(currentIdx); btn.innerHTML = '<i class="ph-fill ph-heart"></i>'; btn.className = "dbtn dbtn-fav active";
+    showToast("Додано до улюблених");
+  }
+  renderPlaces(); renderFavs();
+  saveToCloud();
+}
+
+function removeTour(day, i) {
+  tourPlaces[day].splice(i, 1);
+  renderFavSlots();
+  saveToCloud();
+}
+
+function addToTour() { openDaySelector(currentIdx); }
+
+function renderFavSlots() {
+  for (let day = 0; day < 3; day++) {
+    const ids = ["homeFavRow" + day, "favTourRow" + day, "catalogFavRow" + day];
+    
+    ids.forEach(rid => {
+      const row = document.getElementById(rid);
+      if (!row) return;
+
+      let head = row.previousElementSibling;
+      if (!head || !head.classList.contains("day-header")) {
+        // Clean up any old header elements
+        while (row.previousElementSibling && !row.previousElementSibling.classList.contains("fav-row")) {
+          const prev = row.previousElementSibling;
+          if (prev.classList.contains("section-title") || prev.classList.contains("tour-header")) break; // Don't remove main section title
+          row.parentNode.removeChild(prev);
+        }
+        head = document.createElement("div");
+        head.className = "day-header";
+        row.parentNode.insertBefore(head, row);
+      }
+      head.innerHTML = `
+        <div class="day-title">${DAY_LABELS[day]}:</div>
+        <div class="day-time-chip" onclick="openTimePicker(${day})">
+          <i class="ph ph-clock"></i> <span>${dayTimes[day]}</span>
+        </div>
+      `;
+
+      // Remove any existing hint
+      const existingHint = row.previousElementSibling;
+      if (existingHint && existingHint.classList.contains("day-hint")) {
+        row.parentNode.removeChild(existingHint);
+      }
+      
+      // Add hint if empty
+      if (tourPlaces[day].length === 0) {
+        const hint = document.createElement("div");
+        hint.className = "day-hint";
+        hint.innerHTML = "<span>поки що не обрано</span>";
+        row.parentNode.insertBefore(hint, row);
+      }
+
+      row.innerHTML = "";
+      for (let i = 0; i < 4; i++) {
+        const slot = document.createElement("div");
+        slot.className = "fav-slot";
+        if (tourPlaces[day][i] !== undefined) {
+          const p = allPlaces[tourPlaces[day][i]];
+          if (!p) continue;
+          slot.classList.add("filled");
+          const rating = p.rating ? parseFloat(p.rating).toFixed(1) : "";
+          const bgColor = CAT_BG_LIGHT[p.category] || "#FFE0ED";
+          slot.innerHTML = `
+            ${p.photo_url ? `<div class="slot-media"><img src="${p.photo_url}" onerror="imgErr(this, '${bgColor}', '${p.category}')">
+                             <div class="slot-media-bg" style="display:none">${getCatEmoji(p.category)}</div></div>` 
+                          : `<div class="slot-media"><div class="slot-media-bg" style="background:${bgColor}">${getCatEmoji(p.category)}</div></div>`}
+            <div class="slot-info">
+              <div class="slot-name">${p.name}</div>
+              ${rating ? `<div class="slot-rating"><i class="ph-fill ph-star"></i> ${rating}</div>` : ""}
+            </div>
+            <div class="slot-del" onclick="event.stopPropagation();removeTour(${day},${i})"><i class="ph ph-trash"></i></div>`;
+        } else {
+          slot.innerHTML = `<span style="margin:auto;font-size:24px;color:var(--pink-mid)">+</span>`;
+          slot.onclick = () => showScreen('catalog', 1);
+        }
+        row.appendChild(slot);
+      }
+    });
+  }
+}
+
+function renderFavs() {
+  const btn = document.getElementById("allFavBtn");
+  if (btn) btn.textContent = `Всі ${favs.size} улюблених`;
+  const list = document.getElementById("favList");
+  if (favs.size === 0) {
+    list.innerHTML = `
+      <div style="text-align:center;padding:40px 20px;color:var(--text2)">
+        <i class="ph ph-magnifying-glass" style="font-size:48px;margin-bottom:12px;opacity:0.3"></i>
+        <div style="font-weight:600">Ще немає улюблених</div>
+        <div style="font-size:14px;margin-top:4px">Додайте місця, щоб вони з'явилися тут</div>
+      </div>`;
+    return;
+  }
+  list.innerHTML = [...favs].map(idx => {
+    const p = allPlaces[idx];
+    if (!p) return "";
+    const bg = CAT_BG_LIGHT[p.category] || "#F5F5F5";
+    const rating = parseRating(p.rating) || "–";
+    return `
+    <div class="fav-row-item" onclick="openDetail(${idx})">
+      <div class="fav-thumb" style="background:${bg};overflow:hidden">${thumbHTML(p)}</div>
+      <div class="fav-body">
+        <div class="fav-name">${p.name}</div>
+        <div class="fav-addr"><i class="ph-fill ph-map-pin" style="color:var(--pin)"></i> ${p.address || ""}</div>
+        <div class="fav-meta">
+          <span style="color:var(--star)"><i class="ph-fill ph-star"></i></span>
+          <span style="font-size:11px;font-weight:600">${rating}</span>
+          ${p.distance ? `<span style="font-size:11px;color:var(--text2)">${p.distance}</span>` : ""}
+          ${p.price ? `<span class="price-tag">${p.price}</span>` : ""}
+        </div>
+      </div>
+      <div class="fav-actions">
+        <button class="fav-heart" onclick="event.stopPropagation();toggleFav(${idx},this)"><i class="ph-fill ph-heart"></i></button>
+        <button class="fav-del" onclick="event.stopPropagation();toggleFav(${idx},this)"><i class="ph ph-trash"></i></button>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function applyCategoryTheme(cat) {
+  document.documentElement.style.setProperty("--cat-color", CAT_COLOR[cat] || "#FF4D8D");
+  document.documentElement.style.setProperty("--cat-light", CAT_LIGHT[cat] || "#FFE0ED");
+  document.documentElement.style.setProperty("--bg-page", CAT_BG_PAGE[cat] || "#FFF8F0");
+}
+
+function setSubFilter(type, el) {
+  if (type === "tour") { showFavsTab("tour"); showScreen("favs", 2); return; }
+  activeSubFilter = type;
+  document.querySelectorAll("#subFilters .sub-pill").forEach(p => p.classList.remove("active"));
+  el.classList.add("active");
+  if (type === "near") { requestGeolocation(); return; }
+  renderPlaces();
+}
+
+function requestGeolocation() {
+  if (!navigator.geolocation) { activeSubFilter = "all"; renderPlaces(); return; }
+  navigator.geolocation.getCurrentPosition(
+    pos => { userLat = pos.coords.latitude; userLng = pos.coords.longitude; renderPlaces(); },
+    ()  => { activeSubFilter = "all";
+      document.querySelectorAll("#subFilters .sub-pill").forEach((p,i) => p.classList.toggle("active", i === 0));
+      renderPlaces(); }
+  );
+}
+
+function distanceKm(lat1, lng1, lat2, lng2) {
+  const R = 6371, dLat = (lat2-lat1)*Math.PI/180, dLng = (lng2-lng1)*Math.PI/180;
+  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+function openDaySelector(idx) {
+  pendingAddIdx = idx;
+  const p = allPlaces[idx];
+  const opts = document.getElementById("dayOptions");
+  opts.innerHTML = DAY_LABELS.map((label, day) => {
+    const filled = tourPlaces[day].length;
+    const alreadyIn = tourPlaces[day].includes(idx);
+    const full = filled >= 3;
+    const disabled = alreadyIn || full;
+    const dots = [0,1,2].map(i =>
+      `<div class="day-dot ${i < filled ? "filled" : ""}"></div>`
+    ).join("");
+    return `<div class="day-option ${disabled?"disabled":""}"
+      onclick="${disabled?"":"addToDay("+day+")"}">
+      <span>${label}${alreadyIn?" ✓":""}</span>
+      <div class="day-dots">${dots}</div>
+    </div>`;
+  }).join("");
+  document.getElementById("dayOverlay").classList.add("open");
+}
+
+function closeDaySelector() {
+  document.getElementById("dayOverlay").classList.remove("open");
+  pendingAddIdx = -1;
+}
+
+function addToDay(day) {
+  if (pendingAddIdx < 0) return;
+  if (!tourPlaces[day].includes(pendingAddIdx) && tourPlaces[day].length < 3) {
+    tourPlaces[day].push(pendingAddIdx);
+    renderFavSlots();
+    saveToCloud();
+    const labels = ["початок дня", "середину дня", "кінець дня"];
+    showToast("Додано до туру — " + labels[day]);
+  }
+  closeDaySelector();
+  closeDetail();
+}
+
+function updateDayHint(day) {
+  const hasItems = tourPlaces[day].length > 0;
+  const homeEl = document.getElementById("homeFavSub" + day);
+  if (homeEl) homeEl.style.display = hasItems ? "none" : "";
+  const favEl = document.getElementById("favTourSub" + day);
+  if (favEl) favEl.style.display = hasItems ? "none" : "";
+  if (day === 0) {
+    const catEl = document.getElementById("catalogFavSub");
+    if (catEl) catEl.style.display = hasItems ? "none" : "";
+  }
+}
+
+function showFavsTab(tab, el) {
+  const isTour = tab === "tour";
+  document.getElementById("favsSection").style.display = isTour ? "none" : "";
+  document.getElementById("tourSection").style.display = isTour ? "" : "none";
+  document.getElementById("favsTabFavs").classList.toggle("active", !isTour);
+  document.getElementById("favsTabTour").classList.toggle("active", isTour);
+  if (isTour) renderFavSlots();
+}
+
+function openCatalog(cat) {
+  activeCat = cat;
+  document.querySelectorAll(".filter-pill").forEach(p => {
+    p.classList.toggle("active", p.dataset.cat === cat);
+  });
+  applyCategoryTheme(cat);
+  activeSubFilter = "all";
+  document.querySelectorAll("#subFilters .sub-pill").forEach((p,i) => p.classList.toggle("active", i === 0));
+  renderPlaces();
+  showScreen("catalog", 1);
+}
+
+function showScreen(name, navIdx) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  document.getElementById("screen" + name.charAt(0).toUpperCase() + name.slice(1)).classList.add("active");
+  document.querySelectorAll(".bnav-item").forEach((b,i) => b.classList.toggle("active", i === navIdx));
+}
+
+function goBack() {
+  showScreen("home", 0);
+  document.documentElement.style.setProperty("--cat-color", "#FF4D8D");
+  document.documentElement.style.setProperty("--cat-light", "#FFE0ED");
+  document.documentElement.style.setProperty("--bg-page", "#FFF8F0");
+}
+
+function onSearchInput(val) {
+  searchQuery = val;
+  renderPlaces();
+}
+
+const TIME_OPTIONS = ["09:00", "13:00", "18:00", "20:00"];
+let lastDayIdx = 0;
+function openTimePicker(dayIdx = 0) {
+  lastDayIdx = dayIdx;
+  const grid = document.getElementById("timeOptions");
+  grid.innerHTML = TIME_OPTIONS.map(t =>
+    `<div class="time-opt ${t === dayTimes[dayIdx] ? "active" : ""}" onclick="setStartTime('${t}')">${t}</div>`
+  ).join("");
+  document.getElementById("timeOverlay").classList.add("open");
+}
+function closeTimePicker() {
+  const ov = document.getElementById("timeOverlay");
+  const sh = ov.querySelector(".day-sheet");
+  ov.classList.add("closing");
+  sh.classList.add("closing");
+  setTimeout(() => {
+    ov.classList.remove("open", "closing");
+    sh.classList.remove("closing");
+  }, 300);
+}
+
+function setStartTime(t) {
+  dayTimes[lastDayIdx] = t;
+  renderFavSlots();
+  saveToCloud();
+  
+  const opts = document.querySelectorAll(".time-opt");
+  opts.forEach(o => o.classList.toggle("active", o.textContent === t));
+  
+  showToast("Час змінено на " + t);
+  
+  setTimeout(() => {
+    closeTimePicker();
+  }, 150);
+}
+
+// При открытии: сначала грузим сохранённые данные из Telegram CloudStorage,
+// потом загружаем места из Google Sheets
+loadFromCloud(() => {
+  loadPlaces();
+  renderFavSlots();
+  showOnboarding();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "serve",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["/tmp/serve_pedovki.py"],
+      "port": 8080
+    }
+  ]
+}
