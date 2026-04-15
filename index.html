@@ -548,7 +548,7 @@ html, body {
   <div class="screen active" id="screenHome">
     <div class="page-title">
       <h1>Каталог місць</h1>
-      <span class="grid-icon"><i class="ph-bold ph-map-pin-area"></i></span>
+      <span class="grid-icon"><i class="ph-bold ph-map-pin"></i></span>
     </div>
 
     <div class="cat-grid">
@@ -743,7 +743,7 @@ html, body {
     <div class="bnav-label">Головна</div>
   </div>
   <div class="bnav-item" id="bnav1" onclick="showScreen('catalog',1)">
-    <div class="bnav-icon"><i class="ph ph-map-pin-area"></i></div>
+    <div class="bnav-icon"><i class="ph ph-map-pin"></i></div>
     <div class="bnav-label">Каталог</div>
   </div>
   <div class="bnav-item" id="bnav2" onclick="showScreen('favs',2)">
@@ -907,42 +907,48 @@ function renderPlaces() {
   }
 
   if (!filtered.length) {
+    const debugInfo = searchQuery ? `"${searchQuery}"` : `(${activeCat})`;
     document.getElementById("placesList").innerHTML =
-      `<div class="err"><div class="err-icon"><i class="ph ph-magnifying-glass"></i></div>Нічого не знайдено</div>`;
+      `<div class="err"><div class="err-icon"><i class="ph ph-magnifying-glass"></i></div>Нічого не знайдено ${debugInfo}</div>`;
     return;
   }
 
   document.getElementById("placesList").innerHTML = filtered.map(p => {
-    const idx = allPlaces.indexOf(p);
-    if (idx === -1) return "";
-    const cat = p.category || "other";
-    const bg = CAT_BG[cat] || "#FFB800";
-    const border = CAT_BORDER[cat] || "#F0E8EE";
-    const rating = parseRating(p.rating) || "–";
-    const isFav = favs.has(idx);
-    let distLabel = "";
-    if (activeSubFilter === "near" && userLat !== null) {
-      const km = distanceKm(userLat, userLng, LVIV_CENTER.lat, LVIV_CENTER.lng);
-      distLabel = `<span class="dist-val">${km.toFixed(1)} км від вас</span>`;
-    }
-    return `
-    <div class="place-row" onclick="openDetail(${idx})">
-      <div class="place-thumb" style="background:${bg}; border: 1.5px solid ${border}; overflow:hidden">${thumbHTML(p, true)}</div>
-      <div class="place-body">
-        <div class="place-name">${p.name}</div>
-        <div class="place-addr"><span class="pin-dot"><i class="ph-fill ph-map-pin-area"></i></span>${p.address || p.district || ""}</div>
-        <div class="place-meta">
-          <span class="stars"><i class="ph-fill ph-star"></i></span>
-          <span class="rating-val">${rating}</span>
-          ${distLabel}
-          ${p.price ? `<span class="price-tag">${p.price}</span>` : ""}
+    try {
+      const idx = allPlaces.indexOf(p);
+      if (idx === -1) return "";
+      const cat = p.category || "other";
+      const bg = CAT_BG[cat] || "#FF3D2F";
+      const border = CAT_BORDER[cat] || "#F0E8EE";
+      const rating = parseRating(p.rating) || "–";
+      const isFav = favs.has(idx);
+      let distLabel = "";
+      if (activeSubFilter === "near" && userLat !== null) {
+        const km = distanceKm(userLat, userLng, LVIV_CENTER.lat, LVIV_CENTER.lng);
+        distLabel = `<span class="dist-val">${km.toFixed(1)} км від вас</span>`;
+      }
+      return `
+      <div class="place-row" onclick="openDetail(${idx})">
+        <div class="place-thumb" style="background:${bg}; border: 1.5px solid ${border}; overflow:hidden">${thumbHTML(p, true)}</div>
+        <div class="place-body">
+          <div class="place-name">${p.name}</div>
+          <div class="place-addr"><span class="pin-dot"><i class="ph-fill ph-map-pin"></i></span>${p.address || p.district || ""}</div>
+          <div class="place-meta">
+            <span class="stars"><i class="ph-fill ph-star"></i></span>
+            <span class="rating-val">${rating}</span>
+            ${distLabel}
+            ${p.price ? `<span class="price-tag">${p.price}</span>` : ""}
+          </div>
         </div>
-      </div>
-      <div class="place-actions">
-        <button class="act-btn add" onclick="event.stopPropagation();openDaySelector(${idx})"><i class="ph-bold ph-plus"></i></button>
-        <button class="act-btn fav ${isFav?'active':''}" onclick="event.stopPropagation();toggleFav(${idx},this)">${isFav?'<i class="ph-fill ph-heart"></i>':'<i class="ph ph-heart"></i>'}</button>
-      </div>
-    </div>`;
+        <div class="place-actions">
+          <button class="act-btn add" onclick="event.stopPropagation();openDaySelector(${idx})"><i class="ph-bold ph-plus"></i></button>
+          <button class="act-btn fav ${isFav?'active':''}" onclick="event.stopPropagation();toggleFav(${idx},this)">${isFav?'<i class="ph-fill ph-heart"></i>':'<i class="ph ph-heart"></i>'}</button>
+        </div>
+      </div>`;
+    } catch(e) {
+      console.error("Rendering error:", p, e);
+      return "";
+    }
   }).join("");
 }
 
@@ -1230,32 +1236,36 @@ function renderFavs() {
       </div>`;
     return;
   }
-  const allFavs = [...favs];
   const displayFavs = favsExpanded ? allFavs : allFavs.slice(0, 4);
   
   list.innerHTML = displayFavs.map(idx => {
-    const p = allPlaces[idx];
-    if (!p) return "";
-    const bg = CAT_BG_LIGHT[p.category] || "#F5F5F5";
-    const rating = parseRating(p.rating) || "–";
-    return `
-    <div class="fav-row-item" onclick="openDetail(${idx})">
-      <div class="fav-thumb" style="background:${bg};overflow:hidden">${thumbHTML(p)}</div>
-      <div class="fav-body">
-        <div class="fav-name">${p.name}</div>
-        <div class="fav-addr"><i class="ph-fill ph-map-pin-area" style="color:var(--pin)"></i> ${p.address || ""}</div>
-        <div class="fav-meta">
-          <span style="color:var(--star)"><i class="ph-fill ph-star"></i></span>
-          <span style="font-size:11px;font-weight:600">${rating}</span>
-          ${p.distance ? `<span style="font-size:11px;color:var(--text2)">${p.distance}</span>` : ""}
-          ${p.price ? `<span class="price-tag">${p.price}</span>` : ""}
+    try {
+      const p = allPlaces[idx];
+      if (!p) return "";
+      const bg = CAT_BG_LIGHT[p.category] || "#F5F5F5";
+      const rating = parseRating(p.rating) || "–";
+      return `
+      <div class="fav-row-item" onclick="openDetail(${idx})">
+        <div class="fav-thumb" style="background:${bg};overflow:hidden">${thumbHTML(p)}</div>
+        <div class="fav-body">
+          <div class="fav-name">${p.name}</div>
+          <div class="fav-addr"><i class="ph-fill ph-map-pin" style="color:var(--pin)"></i> ${p.address || ""}</div>
+          <div class="fav-meta">
+            <span style="color:var(--star)"><i class="ph-fill ph-star"></i></span>
+            <span style="font-size:11px;font-weight:600">${rating}</span>
+            ${p.distance ? `<span style="font-size:11px;color:var(--text2)">${p.distance}</span>` : ""}
+            ${p.price ? `<span class="price-tag">${p.price}</span>` : ""}
+          </div>
         </div>
-      </div>
-      <div class="fav-actions">
-        <button class="fav-heart" onclick="event.stopPropagation();toggleFav(${idx},this)"><i class="ph-fill ph-heart"></i></button>
-        <button class="fav-del" onclick="event.stopPropagation();toggleFav(${idx},this)"><i class="ph ph-trash"></i></button>
-      </div>
-    </div>`;
+        <div class="fav-actions">
+          <button class="fav-heart" onclick="event.stopPropagation();toggleFav(${idx},this)"><i class="ph-fill ph-heart"></i></button>
+          <button class="fav-del" onclick="event.stopPropagation();toggleFav(${idx},this)"><i class="ph ph-trash"></i></button>
+        </div>
+      </div>`;
+    } catch(e) {
+      console.error("Rendering error for favorite:", idx, e);
+      return "";
+    }
   }).join("");
 }
 
