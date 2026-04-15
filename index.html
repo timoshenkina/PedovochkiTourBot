@@ -516,7 +516,7 @@ html, body {
         <div class="cat-name">Поїсти</div>
       </div>
       <div class="cat-card cat-walk" onclick="openCatalog('park')">
-        <div class="cat-icon-circle"><i class="ph-bold ph-person-simple-walk"></i></div>
+        <div class="cat-icon-circle"><i class="ph-bold ph-park"></i></div>
         <div class="cat-name">Погуляти</div>
       </div>
       <div class="cat-card cat-see" onclick="openCatalog('museum')">
@@ -921,15 +921,20 @@ function openDetail(idx) {
   document.getElementById("dName").textContent = p.name;
   document.getElementById("dRating").textContent = rating;
   document.getElementById("dPrice").textContent = p.price || "";
-  document.getElementById("dAddr").textContent = p.address || "";
+  if (p.map_url) {
+    document.getElementById("dAddr").innerHTML = `<a href="#" onclick="openExternalLink(event, '${p.map_url}')" style="text-decoration: underline; color: inherit;">${p.address || "Дивитися на мапі"}</a>`;
+  } else {
+    document.getElementById("dAddr").textContent = p.address || "";
+  }
+  
   document.getElementById("dDist").textContent = p.distance ? p.distance + " від центру" : "";
   document.getElementById("dHours").textContent = p.open_hours || "Уточнювати";
   document.getElementById("dDesc").textContent = p.description || p.tip || "Опис скоро з'явиться";
 
-  const social = p.map_url || "";
-  if (social && social.includes("instagram")) {
-    document.getElementById("dSocial").textContent = "@" + (p.name || "").toLowerCase().replace(/\s/g,"").replace(/"/g,"");
+  if (p.instagram_url) {
     document.getElementById("dSocialRow").style.display = "flex";
+    const username = "@" + (p.instagram_url.split("instagram.com/")[1]?.replace(/\/$/, "") || p.name);
+    document.getElementById("dSocial").innerHTML = `<a href="#" onclick="openExternalLink(event, '${p.instagram_url}')" style="color: #007AFF; text-decoration: none;">${username}</a>`;
   } else {
     document.getElementById("dSocialRow").style.display = "none";
   }
@@ -949,6 +954,15 @@ function closeDetail() {
 document.getElementById("detailOverlay").addEventListener("click", e => {
   if (e.target === document.getElementById("detailOverlay")) closeDetail();
 });
+
+function openExternalLink(e, url) {
+  e.preventDefault();
+  if (tg && tg.openLink) {
+    tg.openLink(url);
+  } else {
+    window.open(url, '_blank');
+  }
+}
 document.getElementById("dayOverlay").addEventListener("click", e => {
   if (e.target === document.getElementById("dayOverlay")) closeDaySelector();
 });

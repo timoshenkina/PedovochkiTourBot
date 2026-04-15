@@ -2,9 +2,9 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "serve",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["/tmp/serve_pedovki.py"],
+      "name": "project_telegramm_bot",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "-p", "8080", "/Users/darinatimosenko/Desktop/project_telegramm_bot"],
       "port": 8080
     }
   ]
