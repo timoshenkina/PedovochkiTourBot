@@ -10,7 +10,7 @@
     "open_hours": "08:00 - 22:00",
     "description": "Великий парк у центрі Львова",
     "photo_url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAGGIpGx3RSzBb7auMmFgbk7XFqgZk2o5MeihxnBgmK21EcPnQ43DPrC8ZyZn9jEqvKql6JhB5NwAsM4yWEAjS2onifGIUdilTIjMOeYNGPp1b_vVIDhcTKrGALMSMs7Wan6awA=w408-h306-k-no",
-    "instagram_url": ""
+    "instagram": ""
   },
   {
     "id": "2 погуляти",
@@ -23,7 +23,7 @@
     "open_hours": "10:00 - 18:00",
     "description": "Найбільший ботанічний сад у Львові",
     "photo_url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHxPdHV0tdvjwTdBSORFZD-w916K3I-GDgZhvTxYZ-QxAmUOzBaDdanL8J48aLC9uDTUL_81tev5N2ro2y7UlGZLbedZwfJUIXB7ZSFL8B5zjMX4VCkVBGwvxUnLGKMZHmJ_kcYWKlFMQ9g=w408-h306-k-no",
-    "instagram_url": ""
+    "instagram": ""
   },
   {
     "id": "3 погуляти",
@@ -36,7 +36,7 @@
     "open_hours": "09:00 - 18:00",
     "description": "Тихе, малолюдне і дуже атмосферне місце.",
     "photo_url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAE3-VjL_TpbBsE_lT4dUtze1aGwbHxHQjl6S5YCNgmRa0JUB6ZpFOqKNLp0CNCwSkujqEkJb9LZjSnjK7kcASUfYcCq_UleMz1mt-mKJ_ZWsgOTqKuTCUll0UOg0JZBZzK_nsxo969gO1=w408-h306-k-no",
-    "instagram_url": ""
+    "instagram": ""
   },
   {
     "id": "4 погуляти",
@@ -49,7 +49,7 @@
     "open_hours": "05:00 - 23:00",
     "description": "Найкращий вид на Львів",
     "photo_url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHp34nTH6DDFJs06I-icPAJcXz5A61BKXhpjVCHGVpdBa7h1nioAROrVsU5MA72DLwBu7MQUdFvD9ofw0vIrLbKXv2QlncQPbNxXG90ud39zpG_63kX63DfIqX0MwDE1kz52k15=w408-h306-k-no",
-    "instagram_url": ""
+    "instagram": ""
   },
   {
     "id": "5 погуляти",
@@ -62,7 +62,7 @@
     "open_hours": "10:00 - 19:00",
     "description": "Музей народної архітектури та побуту",
     "photo_url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEVU0LvC9y-QWdSHIBUr9NLhknDKa4xqfT5Qz7BNpN-wwA7HOvMkvOLoJ243DeWzvYQGvDzoYwdrAgjwHqNZ7IfZWzsz5SwdE5mrIsb8nB58treA6HYOijL2J1x4BEF_FzKYs5FMo1rcg9f=w426-h240-k-no",
-    "instagram_url": ""
+    "instagram": ""
   },
   {
     "id": "1 поїсти",
@@ -75,7 +75,7 @@
     "open_hours": "12:00 - 23:00",
     "description": "Де їжа стає мистецтвом",
     "photo_url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAF8F0xYmYs-2LtEHSbF3S4JYUull_8K8QUVme7lfmN7MPB5QZHXXIig64sfSPj5dtR8pEIXQpB7Ec8xFr1EvXs3XK8DuJz0RyFT8mLI_9L5nNx1DgsBg1tArWHOTM_SAOkTW7otGfXNavBI=w408-h272-k-no",
-    "instagram_url": "https://instagram.com/gallery.art.kitchen.lviv"
+    "instagram": "https://www.instagram.com/gallery.art.kitchen/"
   },
   {
     "id": "2 поїсти",
@@ -88,7 +88,7 @@
     "open_hours": "09:00 - 21:00",
     "description": null,
     "photo_url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAFEpdSpYX0RQYUFSHTBbbD0ae_X1Lpi7jC-tXwxX-vmbOWnobLx84Cyz-ORwHibfKQRR6vi3WQOO4k5pNPWLyW6RSJ8zoyuRNUv7i9w5dT0a0v-6TSv3b2GybhNzEPAnhkNEsw2B4swQ1h-=w408-h612-k-no",
-    "instagram_url": "https://instagram.com/cafe.vitalnia"
+    "instagram": ""
   },
   {
     "id": "3 поїсти",
@@ -101,7 +101,7 @@
     "open_hours": "10:00 - 22:00",
     "description": "Затишне місце з чудовим видом на площу Ринок",
     "photo_url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAF8bf85cpP3NQCJuB_cNY1phLZiH-hgvK70QR5S1eYkRK7AUbGslNMQzgEPsjQIqSehsTP2lYWKG52XvYDgveZyyIy57qVj4SNUtgMauo6oN9scvui-vm0QC9xJyYJ9JOlDLspOUmbAyZDv=w408-h306-k-no",
-    "instagram_url": "https://instagram.com/dakh.lviv"
+    "instagram": "https://www.instagram.com/dakh.lviv/"
   },
   {
     "id": "4 поїсти",
@@ -114,7 +114,7 @@
     "open_hours": "13:00 - 23:00",
     "description": null,
     "photo_url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAFSfbXN7viLVcnWB8h1oyX4rROQUv9rIQuKZazU8IAIXhzE0LJ7JamTujLwwtTOIm_RHDhRqFXTqdeIw5V0ICE11WqKbhyXaVRttUK2YIBx26305YW1Kwgnaelyz1zWyv863Xw_VKiN2kOB=w408-h544-k-no",
-    "instagram_url": "https://instagram.com/yolo.lviv"
+    "instagram": "https://www.instagram.com/yolo.rest/"
   },
   {
     "id": "5 поїсти",
@@ -127,7 +127,7 @@
     "open_hours": "10:00 - 21:00",
     "description": null,
     "photo_url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAF8bf85cpP3NQCJuB_cNY1phLZiH-hgvK70QR5S1eYkRK7AUbGslNMQzgEPsjQIqSehsTP2lYWkvYDgveZyyIy57qVj4SNUtgMauo6oN9scvui-vm0QC9xJyYJ9JOlDLspOUmbAyZDv=w408-h306-k-no",
-    "instagram_url": "https://instagram.com/respublika.sadu"
+    "instagram": "https://www.instagram.com/respublika.sadu/"
   },
   {
     "id": "6 поїсти",
@@ -140,7 +140,7 @@
     "open_hours": "10:00 - 22:30",
     "description": null,
     "photo_url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAFyD6OFssQGt4s6-jmMqJH78ZC6c6caEYZPrZAn-8jngHrw_CgI_sLqvlk9B4FB1Jq-KYZ1GSiVYHDv__mlL5zcwyvY1mTkRKhxKUPFK4mWKR27HswNnjbejCGO47FFT23IJiza=w408-h544-k-no",
-    "instagram_url": "https://instagram.com/sycylijsky_dvoryk_lviv"
+    "instagram": "https://www.instagram.com/sicilia.dvorik/"
   },
   {
     "id": "1 подивитися",
@@ -153,7 +153,7 @@
     "open_hours": "10:00 - 19:00",
     "description": null,
     "photo_url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAFkZR2SwDqRPzNOoCVGur1pn8BTCoqh4IYu0DZ1WnmjmSXWz2xtgyOvmYl-PY8RsVoj11gX9bsg7BCqy-tTdUDnVdl7tOwslBxTLc_ZSNe7xt--f_qW9Qx9AvHPAyam4Lqa9wYDvr9MSd0h=w408-h612-k-no",
-    "instagram_url": "https://instagram.com/zenyk.art.gallery"
+    "instagram": ""
   },
   {
     "id": "2 подивитися",
@@ -166,7 +166,7 @@
     "open_hours": "11:00 - 20:00",
     "description": null,
     "photo_url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAESjQvFlVKSxWOgYggUzkOPcHVN1a7aaGMt4KvXQKHpWPJl_d0NEWqD-kDWn0ILyFZV1N8FUSIDuX6pxLmPxf2iLgv0Pima_lIQ9b6GqXTRDPbqkZayVmqlBM8Xjs1YBhEA7mUF=w408-h312-k-no",
-    "instagram_url": "https://instagram.com/ягалерея"
+    "instagram": ""
   },
   {
     "id": "3 подивитися",
@@ -179,7 +179,7 @@
     "open_hours": "11:00 - 19:00",
     "description": null,
     "photo_url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEEXQW2Q7OIwkK4MsL2kSUX79tqQj_7t5BXlOvBk9hpZG5A1gXL16pFzUopGWkdc8AFjFarJbXgG6n4K4BbCAiLScrk1yXbjkSdxn257uQAqptK0imqaYqatnbwZc96XX1A4Bwe=w408-h271-k-no",
-    "instagram_url": "https://instagram.com/львіварня_пива"
+    "instagram": ""
   },
   {
     "id": "2 пофоткатися",
@@ -192,7 +192,7 @@
     "open_hours": null,
     "description": "Витражное окно в подьезде дома для красивых фото",
     "photo_url": "https://pbs.twimg.com/media/DZghmPaWsAAB3dK.jpg",
-    "instagram_url": ""
+    "instagram": ""
   },
   {
     "id": "3 пофоткатися",
@@ -205,7 +205,7 @@
     "open_hours": null,
     "description": "Необычное оформление обычного входа во двор. Сделано с душой и любовью. Витраж на двери создаёт впечатление сказки.",
     "photo_url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAH4k8v-3d4-Ca9HdbfI82FGhTk56AAD9sLQo-o3EdCSkExMnYZvgTpPvlf2_VO8VE92Z43_q8JPz-e6e1isGenOyLnyqV-4o60Vw57JwXr9lj3ULCG2COhqkVOYQjkZFl_v2do7=w408-h543-k-no",
-    "instagram_url": ""
+    "instagram": ""
   },
   {
     "id": "4 пофоткатися",
@@ -218,6 +218,6 @@
     "open_hours": "10:00 - 23:00",
     "description": "Внутренний дворик дворца, окруженный по периметру балконами и колоннадой, с летним кафе и концертами.",
     "photo_url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAFEs_vYMgXn9zSTLBjrCzrEXAsEjgffqovaxdrXL5_9dTwxNwpUjGD0954et-oVTMG4Apgg9omfRBbR3plb5VT6a8LvD9CHOQYwHsjXHFtoAbzF_F5scv6W8vvDBnkn-IhJIbE=w426-h240-k-no",
-    "instagram_url": ""
+    "instagram": ""
   }
 ]
