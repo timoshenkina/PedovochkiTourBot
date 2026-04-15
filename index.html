@@ -802,26 +802,28 @@ const CAT_BG_LIGHT = {
 async function loadPlaces() {
   console.log("Loading places from places.json...");
   try {
-    const res = await fetch('places.json');
-    if (!res.ok) throw new Error("Failed to load JSON");
+    const res = await fetch('places.json?v=' + Date.now());
+    if (!res.ok) throw new Error("Failed to load JSON: " + res.status);
     const json = await res.json();
     
     // We expect the JSON to be an array of places directly
     if (Array.isArray(json) && json.length > 0) {
       console.log("Loaded places:", json.length);
       allPlaces = json.map(p => ({ ...p, rawCategory: (p.category || "").trim(), category: normCat(p.category) }));
+      console.log("Total places in memory:", allPlaces.length);
+      
+      // Render only when data is successfully loaded
+      renderPlaces();
+      renderFavs();
+      renderFavSlots();
     } else {
       console.error("Invalid JSON format or empty array.");
-      showErr();
+      showErr("Дані відсутні або файл пошкоджено.");
     }
   } catch(e) {
     console.error("Fetch error:", e);
-    showErr();
+    showErr("Помилка завантаження даних.");
   }
-  console.log("Total places in memory:", allPlaces.length);
-  renderPlaces();
-  renderFavs();
-  renderFavSlots();
 }
 
 function showErr() {
@@ -882,6 +884,11 @@ function imgErr(img, bg, cat) {
 }
 
 function renderPlaces() {
+  if (allPlaces.length === 0) {
+    console.warn("renderPlaces called but allPlaces is empty. Waiting for loadPlaces.");
+    return;
+  }
+
   let filtered = allPlaces.filter(p => {
     const raw = (p.rawCategory || "").toLowerCase();
     if (activeCat === "photo") return p.category === "photo" || raw.includes("photo");
