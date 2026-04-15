@@ -110,22 +110,22 @@ html, body {
 }
 .cat-name { font-size: 14px; font-weight: 700; }
 
-.cat-food { background: #FFF3D0; border: 1.5px solid #FF8A50; box-shadow: 0 8px 20px rgba(255, 61, 47, 0.05); }
+.cat-food { background: #FFF3D0; border: 1px solid #FF8A50; box-shadow: 0 8px 20px rgba(255, 61, 47, 0.05); }
 .cat-food .cat-icon-circle { background: #FFE082; border: 1px solid #FF8A50; box-shadow: 0 6px 16px rgba(255, 61, 47, 0.05); }
 .cat-food .cat-icon-circle i { color: #FF3D2F; }
 .cat-food .cat-name { color: #FF3D2F; }
 
-.cat-walk { background: #DEFFBF; border: 1.5px solid #9BED8C; box-shadow: 0 8px 20px rgba(0, 194, 23, 0.05); }
+.cat-walk { background: #DEFFBF; border: 1px solid #9BED8C; box-shadow: 0 8px 20px rgba(0, 194, 23, 0.05); }
 .cat-walk .cat-icon-circle { background: #D0FFA4; border: 1px solid #9BED8C; box-shadow: 0 6px 16px rgba(0, 194, 23, 0.05); }
 .cat-walk .cat-icon-circle i { color: #00C217; }
 .cat-walk .cat-name { color: #00C217; }
 
-.cat-see { background: #FFD1E8; border: 1.5px solid #FF92C9; box-shadow: 0 8px 20px rgba(255, 0, 128, 0.08); }
+.cat-see { background: #FFD1E8; border: 1px solid #FF92C9; box-shadow: 0 8px 20px rgba(255, 0, 128, 0.08); }
 .cat-see .cat-icon-circle { background: #FFADD6; border: 1px solid #FF92C9; box-shadow: 0 6px 16px rgba(255, 0, 128, 0.1); }
 .cat-see .cat-icon-circle i { color: #FF0080; }
 .cat-see .cat-name { color: #FF0080; }
 
-.cat-photo { background: #F4D1FF; border: 1.5px solid #D395FF; box-shadow: 0 8px 20px rgba(151, 71, 255, 0.05); }
+.cat-photo { background: #F4D1FF; border: 1px solid #D395FF; box-shadow: 0 8px 20px rgba(151, 71, 255, 0.05); }
 .cat-photo .cat-icon-circle { background: #EDB7FF; border: 1px solid #D395FF; box-shadow: 0 6px 16px rgba(151, 71, 255, 0.05); }
 .cat-photo .cat-icon-circle i { color: #9747FF; }
 .cat-photo .cat-name { color: #9747FF; }
@@ -523,6 +523,16 @@ html, body {
   margin-bottom: 10px;
 }
 .onboarding-btn:active { transform: scale(0.95); }
+.icons8-pin {
+  width: 14px; height: 14px;
+  display: inline-block;
+  background-color: var(--pin);
+  -webkit-mask: url(https://img.icons8.com/?size=100&id=eIFSPeynRDyl&format=svg) no-repeat center;
+  mask: url(https://img.icons8.com/?size=100&id=eIFSPeynRDyl&format=svg) no-repeat center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  vertical-align: middle;
+}
 </style>
 </head>
 <body>
@@ -664,7 +674,7 @@ html, body {
       </div>
       <div class="detail-info">
         <div class="info-row">
-          <div class="info-icon"><i class="ph-fill ph-map-pin" style="color:var(--pin)"></i></div>
+          <div class="info-icon"><span class="icons8-pin" style="width:18px;height:18px"></span></div>
           <div class="info-block">
             <div class="info-label">Адреса</div>
             <div id="dAddrLine" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
@@ -772,6 +782,7 @@ let activeSubFilter = "all";
 let pendingAddIdx = -1;
 let searchQuery = "";
 let userLat = null, userLng = null;
+let favsExpanded = false;
 const DAY_LABELS = ["Початок дня", "Середина дня", "Кінець дня"];
 const LVIV_CENTER = { lat: 49.8397, lng: 24.0297 };
 const CAT_COLOR = { cafe:"#FF3D2F", park:"#00C217", museum:"#FF0080", photo:"#9747FF" };
@@ -913,7 +924,7 @@ function renderPlaces() {
       <div class="place-thumb" style="background:${bg}; border: 2.5px solid ${CAT_BORDER[p.category] || '#F0E8EE'}; overflow:hidden">${thumbHTML(p, true)}</div>
       <div class="place-body">
         <div class="place-name">${p.name}</div>
-        <div class="place-addr"><span class="pin-dot"><i class="ph-fill ph-map-pin"></i></span>${p.address || p.district || ""}</div>
+        <div class="place-addr"><span class="pin-dot"><span class="icons8-pin"></span></span>${p.address || p.district || ""}</div>
         <div class="place-meta">
           <span class="stars"><i class="ph-fill ph-star"></i></span>
           <span class="rating-val">${rating}</span>
@@ -1195,7 +1206,14 @@ function renderFavSlots() {
 
 function renderFavs() {
   const btn = document.getElementById("allFavBtn");
-  if (btn) btn.textContent = `Всі ${favs.size} улюблених`;
+  if (btn) {
+    btn.textContent = `Всі ${favs.size} улюблених`;
+    btn.style.display = (favs.size > 4 && !favsExpanded) ? "block" : "none";
+    btn.onclick = () => {
+      favsExpanded = true;
+      renderFavs();
+    };
+  }
   const list = document.getElementById("favList");
   if (favs.size === 0) {
     list.innerHTML = `
@@ -1206,7 +1224,10 @@ function renderFavs() {
       </div>`;
     return;
   }
-  list.innerHTML = [...favs].map(idx => {
+  const allFavs = [...favs];
+  const displayFavs = favsExpanded ? allFavs : allFavs.slice(0, 4);
+  
+  list.innerHTML = displayFavs.map(idx => {
     const p = allPlaces[idx];
     if (!p) return "";
     const bg = CAT_BG_LIGHT[p.category] || "#F5F5F5";
@@ -1216,7 +1237,7 @@ function renderFavs() {
       <div class="fav-thumb" style="background:${bg};overflow:hidden">${thumbHTML(p)}</div>
       <div class="fav-body">
         <div class="fav-name">${p.name}</div>
-        <div class="fav-addr"><i class="ph-fill ph-map-pin" style="color:var(--pin)"></i> ${p.address || ""}</div>
+        <div class="fav-addr"><span class="icons8-pin"></span> ${p.address || ""}</div>
         <div class="fav-meta">
           <span style="color:var(--star)"><i class="ph-fill ph-star"></i></span>
           <span style="font-size:11px;font-weight:600">${rating}</span>
@@ -1340,7 +1361,12 @@ function showFavsTab(tab, el) {
   document.getElementById("tourSection").style.display = isTour ? "" : "none";
   document.getElementById("favsTabFavs").classList.toggle("active", !isTour);
   document.getElementById("favsTabTour").classList.toggle("active", isTour);
-  if (isTour) renderFavSlots();
+  if (isTour) {
+    renderFavSlots();
+  } else {
+    favsExpanded = false;
+    renderFavs();
+  }
 }
 
 function openCatalog(cat) {

@@ -21,7 +21,7 @@
     "map_url": "https://maps.app.goo.gl/8bUqw9d7JgM3v6pC8",
     "rating": "4.4",
     "open_hours": "10:00 - 18:00",
-    "description": null,
+    "description": "Найбільший ботанічний сад у Львові",
     "photo_url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHxPdHV0tdvjwTdBSORFZD-w916K3I-GDgZhvTxYZ-QxAmUOzBaDdanL8J48aLC9uDTUL_81tev5N2ro2y7UlGZLbedZwfJUIXB7ZSFL8B5zjMX4VCkVBGwvxUnLGKMZHmJ_kcYWKlFMQ9g=w408-h306-k-no",
     "instagram_url": ""
   },
@@ -47,7 +47,7 @@
     "map_url": "https://maps.app.goo.gl/hGf2ZfJEqA9Qk6Gk7",
     "rating": "4.7",
     "open_hours": "05:00 - 23:00",
-    "description": null,
+    "description": "Найкращий вид на Львів",
     "photo_url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHp34nTH6DDFJs06I-icPAJcXz5A61BKXhpjVCHGVpdBa7h1nioAROrVsU5MA72DLwBu7MQUdFvD9ofw0vIrLbKXv2QlncQPbNxXG90ud39zpG_63kX63DfIqX0MwDE1kz52k15=w408-h306-k-no",
     "instagram_url": ""
   },
@@ -57,10 +57,10 @@
     "category": "park",
     "address": "вул. Чернеча Гора, 1",
     "price": "$",
-    "map_url": null,
+    "map_url": "https://maps.app.goo.gl/Kjg6Nw7pXRbcXQsq8",
     "rating": "4.7",
     "open_hours": "10:00 - 19:00",
-    "description": null,
+    "description": "Музей народної архітектури та побуту",
     "photo_url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEVU0LvC9y-QWdSHIBUr9NLhknDKa4xqfT5Qz7BNpN-wwA7HOvMkvOLoJ243DeWzvYQGvDzoYwdrAgjwHqNZ7IfZWzsz5SwdE5mrIsb8nB58treA6HYOijL2J1x4BEF_FzKYs5FMo1rcg9f=w426-h240-k-no",
     "instagram_url": ""
   },
@@ -99,7 +99,7 @@
     "map_url": "https://maps.app.goo.gl/7R2WgT4Y9H9A1N7F8",
     "rating": "4.3",
     "open_hours": "10:00 - 22:00",
-    "description": null,
+    "description": "Затишне місце з чудовим видом на площу Ринок",
     "photo_url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAF8bf85cpP3NQCJuB_cNY1phLZiH-hgvK70QR5S1eYkRK7AUbGslNMQzgEPsjQIqSehsTP2lYWKG52XvYDgveZyyIy57qVj4SNUtgMauo6oN9scvui-vm0QC9xJyYJ9JOlDLspOUmbAyZDv=w408-h306-k-no",
     "instagram_url": "https://instagram.com/dakh.lviv"
   },
@@ -135,9 +135,9 @@
     "category": "cafe",
     "address": "вул. Богдана Хмельницького, 20",
     "price": "$$",
-    "map_url": null,
-    "rating": null,
-    "open_hours": null,
+    "map_url": "https://maps.app.goo.gl/m4ducQXeTaiMLaRE6",
+    "rating": "4.5",
+    "open_hours": "10:00 - 22:30",
     "description": null,
     "photo_url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAFyD6OFssQGt4s6-jmMqJH78ZC6c6caEYZPrZAn-8jngHrw_CgI_sLqvlk9B4FB1Jq-KYZ1GSiVYHDv__mlL5zcwyvY1mTkRKhxKUPFK4mWKR27HswNnjbejCGO47FFT23IJiza=w408-h544-k-no",
     "instagram_url": "https://instagram.com/sycylijsky_dvoryk_lviv"
@@ -181,7 +181,6 @@
     "photo_url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEEXQW2Q7OIwkK4MsL2kSUX79tqQj_7t5BXlOvBk9hpZG5A1gXL16pFzUopGWkdc8AFjFarJbXgG6n4K4BbCAiLScrk1yXbjkSdxn257uQAqptK0imqaYqatnbwZc96XX1A4Bwe=w408-h271-k-no",
     "instagram_url": "https://instagram.com/львіварня_пива"
   },
-
   {
     "id": "2 пофоткатися",
     "name": "Під'їзд у житловому будинку",
