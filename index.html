@@ -120,10 +120,10 @@ html, body {
 .cat-walk .cat-icon-circle i { color: #00C217; }
 .cat-walk .cat-name { color: #00C217; }
 
-.cat-see { background: #FFF0F6; box-shadow: 0 8px 20px rgba(180, 20, 90, 0.05); }
-.cat-see .cat-icon-circle { background: #FFB3D1; border: 2.5px solid #FF8DB8; box-shadow: 0 6px 16px rgba(192, 32, 106, 0.05); }
-.cat-see .cat-icon-circle i { color: #C0206A; }
-.cat-see .cat-name { color: #C0206A; }
+.cat-see { background: var(--pink-light); border: 2.0px solid var(--pink-mid); box-shadow: 0 8px 20px rgba(255, 77, 141, 0.08); }
+.cat-see .cat-icon-circle { background: #FFFFFF; border: 2.5px solid var(--pink-mid); box-shadow: 0 6px 16px rgba(255, 77, 141, 0.1); }
+.cat-see .cat-icon-circle i { color: var(--pink); }
+.cat-see .cat-name { color: var(--pink); }
 
 .cat-photo { background: #F5EEFF; box-shadow: 0 8px 20px rgba(80, 30, 160, 0.05); }
 .cat-photo .cat-icon-circle { background: #DBC8FF; border: 2.5px solid #BE96E4; box-shadow: 0 6px 16px rgba(96, 48, 184, 0.05); }
@@ -965,6 +965,10 @@ function openExternalLink(e, url) {
 }
 document.getElementById("dayOverlay").addEventListener("click", e => {
   if (e.target === document.getElementById("dayOverlay")) closeDaySelector();
+});
+
+document.getElementById("timeOverlay").addEventListener("click", e => {
+  if (e.target === document.getElementById("timeOverlay")) closeTimePicker();
 });
 
 // ─── CLOUD STORAGE ───────────────────────────────────────────
