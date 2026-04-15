@@ -1977,14 +1977,14 @@
         document.getElementById("dDesc").textContent =
           p.description || p.tip || "Опис скоро з'явиться";
 
-        if (p.instagram_url) {
+        if (p.instagram) {
           document.getElementById("dSocialRow").style.display = "flex";
           const username =
             "@" +
-            (p.instagram_url.split("instagram.com/")[1]?.replace(/\/$/, "") ||
-              p.name);
+            (p.instagram.split("instagram.com/")[1]?.replace(/\/$/, "") ||
+              p.instagram.replace(/^@/, ""));
           document.getElementById("dSocial").innerHTML =
-            `<a href="#" onclick="openExternalLink(event, '${p.instagram_url}')" style="color: #007AFF; text-decoration: none;">${username}</a>`;
+            `<a href="#" onclick="openExternalLink(event, '${p.instagram}')" style="color: #007AFF; text-decoration: none;">${username}</a>`;
         } else {
           document.getElementById("dSocialRow").style.display = "none";
         }
@@ -2013,7 +2013,7 @@
       function openExternalLink(e, url) {
         e.preventDefault();
         if (tg && tg.openLink) {
-          tg.openLink(url);
+          tg.openLink(url, { try_instant_view: false });
         } else {
           window.open(url, "_blank");
         }
