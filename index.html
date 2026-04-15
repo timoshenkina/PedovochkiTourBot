@@ -1391,6 +1391,11 @@ function showScreen(name, navIdx) {
   document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
   document.getElementById("screen" + name.charAt(0).toUpperCase() + name.slice(1)).classList.add("active");
   document.querySelectorAll(".bnav-item").forEach((b,i) => b.classList.toggle("active", i === navIdx));
+  
+  if (name === 'favs') {
+    // Always start with the Favorites sub-tab in preview mode when clicking the bottom nav icon
+    showFavsTab('favs', document.getElementById('favsTabFavs'));
+  }
 }
 
 function goBack() {
