@@ -548,7 +548,7 @@ html, body {
   <div class="screen active" id="screenHome">
     <div class="page-title">
       <h1>Каталог місць</h1>
-      <span class="grid-icon"><span class="icons8-pin" style="width:22px;height:22px"></span></span>
+      <span class="grid-icon"><i class="ph-bold ph-map-pin-area"></i></span>
     </div>
 
     <div class="cat-grid">
@@ -743,7 +743,7 @@ html, body {
     <div class="bnav-label">Головна</div>
   </div>
   <div class="bnav-item" id="bnav1" onclick="showScreen('catalog',1)">
-    <div class="bnav-icon"><span class="icons8-pin" style="width:24px;height:24px"></span></div>
+    <div class="bnav-icon"><i class="ph ph-map-pin-area"></i></div>
     <div class="bnav-label">Каталог</div>
   </div>
   <div class="bnav-item" id="bnav2" onclick="showScreen('favs',2)">
@@ -930,7 +930,7 @@ function renderPlaces() {
       <div class="place-thumb" style="background:${bg}; border: 1.5px solid ${border}; overflow:hidden">${thumbHTML(p, true)}</div>
       <div class="place-body">
         <div class="place-name">${p.name}</div>
-        <div class="place-addr"><span class="pin-dot"><span class="icons8-pin"></span></span>${p.address || p.district || ""}</div>
+        <div class="place-addr"><span class="pin-dot"><i class="ph-fill ph-map-pin-area"></i></span>${p.address || p.district || ""}</div>
         <div class="place-meta">
           <span class="stars"><i class="ph-fill ph-star"></i></span>
           <span class="rating-val">${rating}</span>
@@ -1243,7 +1243,7 @@ function renderFavs() {
       <div class="fav-thumb" style="background:${bg};overflow:hidden">${thumbHTML(p)}</div>
       <div class="fav-body">
         <div class="fav-name">${p.name}</div>
-        <div class="fav-addr"><span class="icons8-pin"></span> ${p.address || ""}</div>
+        <div class="fav-addr"><i class="ph-fill ph-map-pin-area" style="color:var(--pin)"></i> ${p.address || ""}</div>
         <div class="fav-meta">
           <span style="color:var(--star)"><i class="ph-fill ph-star"></i></span>
           <span style="font-size:11px;font-weight:600">${rating}</span>
