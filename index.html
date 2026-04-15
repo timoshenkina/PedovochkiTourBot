@@ -729,8 +729,8 @@
         position: fixed;
         inset: 0;
         z-index: 999;
-        background: #F9E97E;
-        background-image: radial-gradient(circle, #F5E46A 10%, transparent 10%);
+        background-color: #F9E97E;
+        background-image: radial-gradient(circle, rgba(255,255,255,0.3) 10%, transparent 10%);
         background-size: 36px 36px;
         display: flex;
         flex-direction: column;
@@ -2660,7 +2660,10 @@
         splashDone = true;
         const el = document.getElementById("splash");
         el.classList.add("hiding");
-        setTimeout(() => el.remove(), 500);
+        setTimeout(() => {
+          el.remove();
+          showOnboarding();
+        }, 500);
       }
       setTimeout(hideSplash, 3000);
 
@@ -2668,7 +2671,6 @@
       // потом загружаем места из Google Sheets
       loadFromCloud(() => {
         loadPlaces();
-        showOnboarding();
       });
     </script>
   </body>
