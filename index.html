@@ -18,23 +18,23 @@
   --bg: #FFF8F0;
   --bg2: #FFF0F5;
   --surface: #FFFFFF;
-  --pink: #FF4D8D;
-  --pink-light: #FFE0ED;
-  --pink-mid: #FFB3D1;
-  --green: #72B560;
-  --green-light: #EAF7E4;
+  --pink: #FF0080;
+  --pink-light: #FFD1E8;
+  --pink-mid: #FFADD6;
+  --green: #00C217;
+  --green-light: #DEFFBF;
   --yellow: #FFB800;
   --yellow-light: #FFF8E1;
-  --purple: #9C6FE4;
-  --purple-light: #F0E8FF;
-  --orange: #FF6B35;
-  --orange-light: #FFF0EB;
+  --purple: #9747FF;
+  --purple-light: #F4D1FF;
+  --orange: #FF3D2F;
+  --orange-light: #FFF3D0;
   --text: #260A18;
   --text2: #888;
   --text3: #BBB;
   --border: #F0E8EE;
   --star: #FFB800;
-  --pin: #FF4D8D;
+  --pin: #FF0080;
   --r: 16px;
   --r-sm: 10px;
 }
@@ -110,25 +110,25 @@ html, body {
 }
 .cat-name { font-size: 14px; font-weight: 700; }
 
-.cat-food { background: #FFF3D0; box-shadow: 0 8px 20px rgba(255, 107, 53, 0.05); }
-.cat-food .cat-icon-circle { background: #FFE082; border: 2.5px solid #F5C040; box-shadow: 0 6px 16px rgba(255, 61, 47, 0.05); }
+.cat-food { background: #FFF3D0; box-shadow: 0 8px 20px rgba(255, 61, 47, 0.05); }
+.cat-food .cat-icon-circle { background: #FFE082; border: 2.5px solid #FF8A50; box-shadow: 0 6px 16px rgba(255, 61, 47, 0.05); }
 .cat-food .cat-icon-circle i { color: #FF3D2F; }
 .cat-food .cat-name { color: #FF3D2F; }
 
-.cat-walk { background: #DEFFBF; box-shadow: 0 8px 20px rgba(0, 150, 20, 0.05); }
+.cat-walk { background: #DEFFBF; box-shadow: 0 8px 20px rgba(0, 194, 23, 0.05); }
 .cat-walk .cat-icon-circle { background: #D0FFA4; border: 2.5px solid #9BED8C; box-shadow: 0 6px 16px rgba(0, 194, 23, 0.05); }
 .cat-walk .cat-icon-circle i { color: #00C217; }
 .cat-walk .cat-name { color: #00C217; }
 
-.cat-see { background: var(--pink-light); border: 2.0px solid var(--pink-mid); box-shadow: 0 8px 20px rgba(255, 77, 141, 0.08); }
-.cat-see .cat-icon-circle { background: #FFFFFF; border: 2.5px solid var(--pink-mid); box-shadow: 0 6px 16px rgba(255, 77, 141, 0.1); }
-.cat-see .cat-icon-circle i { color: var(--pink); }
-.cat-see .cat-name { color: var(--pink); }
+.cat-see { background: #FFD1E8; border: 2.0px solid #FF92C9; box-shadow: 0 8px 20px rgba(255, 0, 128, 0.08); }
+.cat-see .cat-icon-circle { background: #FFADD6; border: 2.5px solid #FF92C9; box-shadow: 0 6px 16px rgba(255, 0, 128, 0.1); }
+.cat-see .cat-icon-circle i { color: #FF0080; }
+.cat-see .cat-name { color: #FF0080; }
 
-.cat-photo { background: #F5EEFF; box-shadow: 0 8px 20px rgba(80, 30, 160, 0.05); }
-.cat-photo .cat-icon-circle { background: #DBC8FF; border: 2.5px solid #BE96E4; box-shadow: 0 6px 16px rgba(96, 48, 184, 0.05); }
-.cat-photo .cat-icon-circle i { color: #6030B8; }
-.cat-photo .cat-name { color: #6030B8; }
+.cat-photo { background: #F4D1FF; border: 2.0px solid #D395FF; box-shadow: 0 8px 20px rgba(151, 71, 255, 0.05); }
+.cat-photo .cat-icon-circle { background: #EDB7FF; border: 2.5px solid #D395FF; box-shadow: 0 6px 16px rgba(151, 71, 255, 0.05); }
+.cat-photo .cat-icon-circle i { color: #9747FF; }
+.cat-photo .cat-name { color: #9747FF; }
 
 /* FAVORITES SECTION */
 .section-title { font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 12px; }
@@ -743,17 +743,17 @@ let searchQuery = "";
 let userLat = null, userLng = null;
 const DAY_LABELS = ["Початок дня", "Середина дня", "Кінець дня"];
 const LVIV_CENTER = { lat: 49.8397, lng: 24.0297 };
-const CAT_COLOR = { cafe:"#FF6B35", park:"#72B560", museum:"#FF4D8D", photo:"#9C6FE4" };
-const CAT_LIGHT = { cafe:"#FFF3E8", park:"#EAF7E4", museum:"#FFE0ED", photo:"#F0E8FF" };
+const CAT_COLOR = { cafe:"#FF3D2F", park:"#00C217", museum:"#FF0080", photo:"#9747FF" };
+const CAT_LIGHT = { cafe:"#FFF3D0", park:"#DEFFBF", museum:"#FFD1E8", photo:"#F4D1FF" };
 const CAT_BG_PAGE = { cafe:"#FFFBF0", park:"#F3FAF0", museum:"#FFF5F8", photo:"#F7F3FF" };
 
 const CAT_BG = {
-  cafe: "#FFB800", park: "#72B560", museum: "#FF4D8D",
-  photo: "#9C6FE4", other: "#FF6B35"
+  cafe: "#FF3D2F", park: "#00C217", museum: "#FF0080",
+  photo: "#9747FF", other: "#FF3D2F"
 };
 const CAT_BG_LIGHT = {
-  cafe: "#FFF3E8", park: "#EAF7E4", museum: "#FFE0ED",
-  photo: "#F0E8FF", other: "#FFF0EB"
+  cafe: "#FFF3D0", park: "#DEFFBF", museum: "#FFD1E8",
+  photo: "#F4D1FF", other: "#FFF3D0"
 };
 
 async function loadPlaces() {
