@@ -78,6 +78,19 @@
     "instagram": "https://www.instagram.com/gallery.art.kitchen/"
   },
   {
+    "id": "7 поїсти",
+    "name": "36 Po",
+    "category": "cafe",
+    "address": "вул. Підвальна, 36",
+    "price": "$$",
+    "map_url": "https://www.google.com.ua/maps/place/36+Po/@49.842444,24.0308834,17z",
+    "rating": "4.6",
+    "open_hours": "08:00 - 23:00",
+    "description": "Затишне кафе в самому серці Львова. Смачні сніданки, кава та легкі страви — ідеально для початку дня або паузи між прогулянками.",
+    "photo_url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHBWi0re_dboZChbUvCOHPxOmdfZUoeJXLLu0YyOJr-4imllD25uvlFBD30u8xZAIqP9OpeIAnKb3H_Wi_D260sZdou8Ca5UzH8UjWPTHtgrxnaJlZ7toFclclG4ghWysrVerv7=w426-h240-k-no",
+    "instagram": "https://www.instagram.com/36po_lviv/"
+  },
+  {
     "id": "2 поїсти",
     "name": "Cafe Vitalnia",
     "category": "cafe",
@@ -156,6 +169,19 @@
     "instagram": ""
   },
   {
+    "id": "4 подивитися",
+    "name": "Jam Factory Art Center",
+    "category": "museum",
+    "address": "вул. Богданівська, 13",
+    "price": "$$",
+    "map_url": "https://www.google.com.ua/maps/place/Jam+Factory/@49.8558565,24.0457755,17z",
+    "rating": "4.7",
+    "open_hours": "10:00 - 20:00",
+    "description": "Сучасний арт-центр у реставрованому промисловому просторі. Виставки, інсталяції, кафе та магазин дизайну.",
+    "photo_url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAG1BBsgd8O5PNA41ilbteXzUQ77_OGKxNLbkO7KpAF2VWZBqZcZR7JX8Qs1RCzsk8BdB1ppN2uYagAw5FC0N5nJ2ScHdZ5mbakfO_PFpPGb4a8tD7TNxet2INODrJY1xBOnPXrNsQ=w408-h272-k-no",
+    "instagram": "https://www.instagram.com/jamfactory.artcenter/"
+  },
+  {
     "id": "2 подивитися",
     "name": "ЯГалерея",
     "category": "museum",
@@ -205,6 +231,19 @@
     "open_hours": null,
     "description": "Необычное оформление обычного входа во двор. Сделано с душой и любовью. Витраж на двери создаёт впечатление сказки.",
     "photo_url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAH4k8v-3d4-Ca9HdbfI82FGhTk56AAD9sLQo-o3EdCSkExMnYZvgTpPvlf2_VO8VE92Z43_q8JPz-e6e1isGenOyLnyqV-4o60Vw57JwXr9lj3ULCG2COhqkVOYQjkZFl_v2do7=w408-h543-k-no",
+    "instagram": ""
+  },
+  {
+    "id": "6 погуляти",
+    "name": "Дім врятованих тварин",
+    "category": "park",
+    "address": "вул. Зелена, 116а",
+    "price": "$",
+    "map_url": "https://www.google.com.ua/maps/place/%D0%94%D0%BE%D0%BC+%D1%81%D0%BF%D0%B0%D1%81%D0%B5%D0%BD%D0%BD%D1%8B%D1%85+%D0%B6%D0%B8%D0%B2%D0%BE%D1%82%D0%BD%D1%8B%D1%85/@49.8457926,24.0469552,17z",
+    "rating": "4.8",
+    "open_hours": "10:00 - 18:00",
+    "description": "Притулок для врятованих тварин — тут живуть коти, собаки та інші улюбленці. Можна прийти познайомитись, погладити та підтримати добру справу.",
+    "photo_url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHHw5lVBGvjgNl0UNExWLYNimkPAvwWqvVOcEcgSswj5H_bTfjvR4vnvkmzx71--0fEvC5S7WejEfh9Ela5OZtUqh0vQQ9YaSSD84f2XCahrW5KZWIY_vLEqv-9PXqCt7wxvFFuFhrpO0Hn=w408-h725-k-no",
     "instagram": ""
   },
   {
