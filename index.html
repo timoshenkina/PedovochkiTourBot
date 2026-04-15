@@ -745,6 +745,7 @@ const DAY_LABELS = ["Початок дня", "Середина дня", "Кін�
 const LVIV_CENTER = { lat: 49.8397, lng: 24.0297 };
 const CAT_COLOR = { cafe:"#FF3D2F", park:"#00C217", museum:"#FF0080", photo:"#9747FF" };
 const CAT_LIGHT = { cafe:"#FFF3D0", park:"#DEFFBF", museum:"#FFD1E8", photo:"#F4D1FF" };
+const CAT_BORDER = { cafe:"#FF8A50", park:"#9BED8C", museum:"#FF92C9", photo:"#D395FF" };
 const CAT_BG_PAGE = { cafe:"#FFFBF0", park:"#F3FAF0", museum:"#FFF5F8", photo:"#F7F3FF" };
 
 const CAT_BG = {
@@ -878,7 +879,7 @@ function renderPlaces() {
     }
     return `
     <div class="place-row" onclick="openDetail(${idx})">
-      <div class="place-thumb" style="background:${bg};overflow:hidden">${thumbHTML(p, true)}</div>
+      <div class="place-thumb" style="background:${bg}; border: 2.5px solid ${CAT_BORDER[p.category] || '#F0E8EE'}; overflow:hidden">${thumbHTML(p, true)}</div>
       <div class="place-body">
         <div class="place-name">${p.name}</div>
         <div class="place-addr"><span class="pin-dot"><i class="ph-fill ph-map-pin"></i></span>${p.address || p.district || ""}</div>
