@@ -724,6 +724,80 @@
         cursor: pointer;
       }
 
+      /* SPLASH SCREEN */
+      #splash {
+        position: fixed;
+        inset: 0;
+        z-index: 999;
+        background: #F9E97E;
+        background-image: radial-gradient(circle, #F5E46A 10%, transparent 10%);
+        background-size: 36px 36px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        transition: opacity 0.5s ease;
+      }
+      #splash.hiding {
+        opacity: 0;
+        pointer-events: none;
+      }
+      #splash-skip {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(255,255,255,0.55);
+        color: #260A18;
+        font-size: 16px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+        opacity: 0;
+        animation: splashFadeIn 0.4s ease 0.3s forwards;
+      }
+      #splash-cathedral {
+        position: absolute;
+        bottom: -20px;
+        left: -10px;
+        width: 100%;
+        max-width: 390px;
+        height: 55%;
+        background: url('splash_cathedral.png') no-repeat bottom left;
+        background-size: contain;
+        opacity: 0;
+        transform: translateY(60px);
+        animation: splashSlideUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.4s forwards;
+      }
+      #splash-title {
+        position: absolute;
+        top: 12%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-20px);
+        width: 85%;
+        max-width: 320px;
+        background: url('splash_title.png') no-repeat center;
+        background-size: contain;
+        aspect-ratio: 2.2 / 1;
+        opacity: 0;
+        animation: splashFadeDown 0.6s ease 0.9s forwards;
+      }
+      @keyframes splashSlideUp {
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes splashFadeDown {
+        to { opacity: 1; transform: translateX(-50%) translateY(0); }
+      }
+      @keyframes splashFadeIn {
+        to { opacity: 1; }
+      }
+
       /* DETAIL MODAL */
       .detail-overlay {
         position: fixed;
@@ -1523,6 +1597,13 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- SPLASH SCREEN -->
+    <div id="splash">
+      <button id="splash-skip" onclick="hideSplash()">✕</button>
+      <div id="splash-cathedral"></div>
+      <div id="splash-title"></div>
     </div>
 
     <!-- DETAIL MODAL -->
@@ -2571,6 +2652,17 @@
           sh.classList.remove("closing");
         }, 300);
       }
+
+      // SPLASH
+      let splashDone = false;
+      function hideSplash() {
+        if (splashDone) return;
+        splashDone = true;
+        const el = document.getElementById("splash");
+        el.classList.add("hiding");
+        setTimeout(() => el.remove(), 500);
+      }
+      setTimeout(hideSplash, 3000);
 
       // При открытии: сначала грузим сохранённые данные из Telegram CloudStorage,
       // потом загружаем места из Google Sheets
