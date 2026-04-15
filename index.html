@@ -844,10 +844,10 @@ function parseRating(r) {
 function normCat(c) {
   if (!c) return "other";
   c = c.trim().toLowerCase();
-  if (c.includes("cafe") || c.includes("bar")) return "cafe";
-  if (c === "park") return "park";
-  if (c === "museum") return "museum";
-  if (c.includes("photo")) return "photo";
+  if (c.includes("cafe") || c.includes("bar") || c.includes("їсти")) return "cafe";
+  if (c.includes("park") || c.includes("гуляти")) return "park";
+  if (c.includes("museum") || c.includes("дивитися")) return "museum";
+  if (c.includes("photo") || c.includes("фоткатися")) return "photo";
   return "other";
 }
 
@@ -902,6 +902,9 @@ function renderPlaces() {
   }
 
   console.log(`Rendering ${filtered.length} places for cat: ${activeCat}, sub: ${activeSubFilter}, search: ${searchQuery}`);
+  if (allPlaces.length > 0 && filtered.length === 0) {
+    console.warn("Possible filtering issue: allPlaces has items but filtered is empty.");
+  }
 
   if (!filtered.length) {
     document.getElementById("placesList").innerHTML =
@@ -911,7 +914,10 @@ function renderPlaces() {
 
   document.getElementById("placesList").innerHTML = filtered.map(p => {
     const idx = allPlaces.indexOf(p);
-    const bg = CAT_BG[p.category] || "#FFB800";
+    if (idx === -1) return "";
+    const cat = p.category || "other";
+    const bg = CAT_BG[cat] || "#FFB800";
+    const border = CAT_BORDER[cat] || "#F0E8EE";
     const rating = parseRating(p.rating) || "–";
     const isFav = favs.has(idx);
     let distLabel = "";
@@ -921,7 +927,7 @@ function renderPlaces() {
     }
     return `
     <div class="place-row" onclick="openDetail(${idx})">
-      <div class="place-thumb" style="background:${bg}; border: 2.5px solid ${CAT_BORDER[p.category] || '#F0E8EE'}; overflow:hidden">${thumbHTML(p, true)}</div>
+      <div class="place-thumb" style="background:${bg}; border: 1.5px solid ${border}; overflow:hidden">${thumbHTML(p, true)}</div>
       <div class="place-body">
         <div class="place-name">${p.name}</div>
         <div class="place-addr"><span class="pin-dot"><span class="icons8-pin"></span></span>${p.address || p.district || ""}</div>
