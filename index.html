@@ -842,7 +842,7 @@ function imgErr(img, bg, cat) {
 function renderPlaces() {
   let filtered = allPlaces.filter(p => {
     const raw = (p.rawCategory || "").toLowerCase();
-    if (activeCat === "photo") return p.category === "photo" || p.category === "museum" || raw.includes("photo");
+    if (activeCat === "photo") return p.category === "photo" || raw.includes("photo");
     if (activeCat === "cafe") return p.category === "cafe" || p.category === "bar";
     return p.category === activeCat;
   });
