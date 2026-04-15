@@ -181,19 +181,7 @@
     "photo_url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEEXQW2Q7OIwkK4MsL2kSUX79tqQj_7t5BXlOvBk9hpZG5A1gXL16pFzUopGWkdc8AFjFarJbXgG6n4K4BbCAiLScrk1yXbjkSdxn257uQAqptK0imqaYqatnbwZc96XX1A4Bwe=w408-h271-k-no",
     "instagram_url": "https://instagram.com/львіварня_пива"
   },
-  {
-    "id": "1 пофоткатися",
-    "name": "Італійський дворик",
-    "category": "photo-place",
-    "address": "пл. Ринок, 6",
-    "price": null,
-    "map_url": "https://maps.app.goo.gl/6H7LkT3M8H7N5K8J9",
-    "rating": null,
-    "open_hours": null,
-    "description": "Унікальна пам'ятка архітектури Ренесансу всередині Палацу Корнякта.",
-    "photo_url": "https://upload.wikimedia.org/wikipedia/commons/e/eb/Italian_courtyard_Lviv.jpg",
-    "instagram_url": ""
-  },
+
   {
     "id": "2 пофоткатися",
     "name": "Під'їзд у житловому будинку",
