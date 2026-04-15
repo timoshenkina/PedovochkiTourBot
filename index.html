@@ -2051,12 +2051,14 @@
         document.getElementById("dPrice").textContent = p.price || "";
         if (p.map_url) {
           const addrLink = document.createElement("a");
-          addrLink.href = "#";
+          addrLink.href = p.map_url;
+          addrLink.target = "_blank";
+          addrLink.rel = "noopener noreferrer";
           addrLink.style.cssText = "text-decoration: underline; color: inherit;";
           addrLink.textContent = p.address || "Дивитися на мапі";
           addrLink.addEventListener("click", (e) => {
             e.preventDefault();
-            openExternalLink(e, p.map_url);
+            openExternalLink(p.map_url);
           });
           document.getElementById("dAddr").innerHTML = "";
           document.getElementById("dAddr").appendChild(addrLink);
@@ -2079,12 +2081,14 @@
             (p.instagram.split("instagram.com/")[1]?.replace(/\/$/, "") ||
               p.instagram.replace(/^@/, ""));
           const igLink = document.createElement("a");
-          igLink.href = "#";
+          igLink.href = p.instagram;
+          igLink.target = "_blank";
+          igLink.rel = "noopener noreferrer";
           igLink.style.cssText = "color: #007AFF; text-decoration: none;";
           igLink.textContent = username;
           igLink.addEventListener("click", (e) => {
             e.preventDefault();
-            openExternalLink(e, p.instagram);
+            openExternalLink(p.instagram);
           });
           document.getElementById("dSocial").innerHTML = "";
           document.getElementById("dSocial").appendChild(igLink);
@@ -2113,8 +2117,7 @@
             closeDetail();
         });
 
-      function openExternalLink(e, url) {
-        e.preventDefault();
+      function openExternalLink(url) {
         if (tg && tg.openLink) {
           tg.openLink(url, { try_instant_view: false });
         } else {
