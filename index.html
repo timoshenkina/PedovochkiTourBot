@@ -50,8 +50,8 @@
         --orange: #ff3d2f;
         --orange-light: #fff3d0;
         --text: #260a18;
-        --text2: #888;
-        --text3: #bbb;
+        --text2: #7D6A6C;
+        --text3: #7D6A6C;
         --border: #f0e8ee;
         --star: #ffb800;
         --pin: #ff0080;
@@ -1181,7 +1181,7 @@
         transform: scale(0.96);
       }
       .time-actions .tbtn-cancel {
-        background: #f2f2f7;
+        background: #7D6A6C;
         color: #260A18;
       }
       .time-actions .tbtn-close {
@@ -1826,7 +1826,7 @@
       function thumbHTML(p, vivid) {
         const bg = vivid
           ? CAT_BG[p.category] || "#FFB800"
-          : CAT_BG_LIGHT[p.category] || "#F5F5F5";
+          : CAT_BG_LIGHT[p.category] || "#7D6A6C";
         const icon = getCatIcon(p.category);
         if (p.photo_url) {
           return `<img src="${p.photo_url}" alt=""
@@ -1952,7 +1952,7 @@
         const p = allPlaces[idx];
         if (!p) return;
         currentIdx = idx;
-        const bg = CAT_BG_LIGHT[p.category] || "#F5F5F5";
+        const bg = CAT_BG_LIGHT[p.category] || "#7D6A6C";
         const emoji = getCatEmoji(p.category);
         const rating = parseRating(p.rating) || "–";
 
@@ -2288,7 +2288,7 @@
             try {
               const p = allPlaces[idx];
               if (!p) return "";
-              const bg = CAT_BG_LIGHT[p.category] || "#F5F5F5";
+              const bg = CAT_BG_LIGHT[p.category] || "#7D6A6C";
               const rating = parseRating(p.rating) || "–";
               return `
       <div class="fav-row-item" onclick="openDetail(${idx})">
