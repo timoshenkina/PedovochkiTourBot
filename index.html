@@ -1197,6 +1197,9 @@
         position: fixed;
         bottom: 90px;
         left: 50%;
+        display: flex;
+        align-items: center;
+        gap: 10px;
         transform: translateX(-50%) translateY(20px);
         background: #1a1a1a;
         color: #fff;
@@ -1209,12 +1212,25 @@
         pointer-events: none;
         z-index: 999;
         transition:
-          opacity 0.2s,
-          transform 0.2s;
+          opacity 0.3s ease,
+          transform 0.3s ease;
       }
       .toast.show {
         opacity: 1;
         transform: translateX(-50%) translateY(0);
+        pointer-events: auto;
+      }
+      .toast-btn {
+        background: rgba(255,255,255,0.2);
+        border: none;
+        color: #fff;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 4px 10px;
+        border-radius: 12px;
+        cursor: pointer;
+        white-space: nowrap;
+        flex-shrink: 0;
       }
       .time-grid {
         display: grid;
@@ -2258,12 +2274,22 @@
       // ─────────────────────────────────────────────────────────────
 
       let toastTimer = null;
-      function showToast(msg) {
+      function showToast(msg, btn) {
         const el = document.getElementById("toast");
-        el.textContent = msg;
+        el.innerHTML = `<span>${msg}</span>`;
+        if (btn) {
+          const b = document.createElement("button");
+          b.className = "toast-btn";
+          b.textContent = btn.label;
+          b.onclick = () => {
+            el.classList.remove("show");
+            btn.action();
+          };
+          el.appendChild(b);
+        }
         el.classList.add("show");
         clearTimeout(toastTimer);
-        toastTimer = setTimeout(() => el.classList.remove("show"), 2200);
+        toastTimer = setTimeout(() => el.classList.remove("show"), 3000);
       }
 
       function toggleFav(idx, btn) {
@@ -2387,7 +2413,18 @@
             <div class="slot-del" onclick="event.stopPropagation();removeTour(${day},${i})"><i class="ph-bold ph-trash-simple"></i></div>`;
               } else {
                 slot.innerHTML = `<span style="margin:auto;font-size:24px;color:var(--pink-mid)">+</span>`;
-                slot.onclick = () => showScreen("catalog", 1);
+                slot.onclick = () => {
+                  if (favs.size === 0) {
+                    showToast("Спочатку додай місця до улюблених", {
+                      label: "До каталогу",
+                      action: () => showScreen("catalog", 1)
+                    });
+                  } else {
+                    showScreen("favs", 2);
+                    setTimeout(() => showFavsTab("tour",
+                      document.getElementById("favsTabTour")), 350);
+                  }
+                };
               }
               row.appendChild(slot);
             }
