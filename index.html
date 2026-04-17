@@ -769,36 +769,52 @@
       }
       #splash-cathedral {
         position: absolute;
-        bottom: 0;
-        left: -5%;
-        width: 110%;
-        height: 58%;
-        background: url('splash_cathedral.png') no-repeat bottom left;
+        left: -10%;
+        top: 260px;
+        width: 136%;
+        height: 630px;
+        background: url('splash_cathedral.png') no-repeat top left;
         background-size: contain;
+        mix-blend-mode: darken;
         opacity: 0;
         transform-origin: bottom left;
-        transform: scale(0.18);
-        animation: splashGrowCathedral 0.9s cubic-bezier(0.22,1,0.36,1) 0.25s forwards;
+        transform: scale(0.12);
+        animation: splashGrowCathedral 1s cubic-bezier(0.22,1,0.36,1) 0.2s forwards;
       }
       #splash-title {
         position: absolute;
-        top: 8%;
-        right: -2%;
-        width: 78%;
-        max-width: 300px;
-        background: url('splash_title.png') no-repeat center right;
+        top: 133px;
+        left: 50%;
+        width: 97%;
+        background: url('splash_title.png') no-repeat center;
         background-size: contain;
-        aspect-ratio: 2.2 / 1;
+        aspect-ratio: 378 / 178;
         opacity: 0;
+        transform-origin: top center;
+        transform: translateX(-50%) scale(0.15);
+        animation: splashGrowTitle 0.85s cubic-bezier(0.22,1,0.36,1) 0.6s forwards;
+      }
+      #splash-angel {
+        position: absolute;
+        left: 155px;
+        top: -97px;
+        width: 195px;
+        height: 346px;
+        background: url('splash_angel.png') no-repeat center;
+        background-size: contain;
+        opacity: 0;
+        transform: rotate(-17deg) scale(0.12);
         transform-origin: top right;
-        transform: scale(0.15);
-        animation: splashGrowTitle 0.8s cubic-bezier(0.22,1,0.36,1) 0.7s forwards;
+        animation: splashGrowAngel 0.9s cubic-bezier(0.22,1,0.36,1) 0.45s forwards;
       }
       @keyframes splashGrowCathedral {
-        to { opacity: 1; transform: scale(1); }
+        to { opacity: 0.65; transform: scale(1); }
       }
       @keyframes splashGrowTitle {
-        to { opacity: 1; transform: scale(1); }
+        to { opacity: 1; transform: translateX(-50%) scale(1); }
+      }
+      @keyframes splashGrowAngel {
+        to { opacity: 0.55; transform: rotate(-17deg) scale(1); }
       }
       @keyframes splashFadeIn {
         to { opacity: 1; }
@@ -1645,6 +1661,7 @@
     <div id="splash">
       <button id="splash-skip" onclick="hideSplash()">✕</button>
       <div id="splash-cathedral"></div>
+      <div id="splash-angel"></div>
       <div id="splash-title"></div>
     </div>
 
