@@ -2849,20 +2849,25 @@
         renderPlaces();
       }
 
-      const TIME_OPTIONS = ["09:00", "13:00", "18:00", "20:00"];
+      const TIME_OPTIONS = [
+        ["08:00", "09:00", "10:00", "11:00"], // початок дня
+        ["12:00", "13:00", "14:00", "15:00"], // середина дня
+        ["16:00", "17:00", "18:00", "20:00"], // кінець дня
+      ];
       let lastDayIdx = 0;
       let tempTime = null;
 
       function openTimePicker(dayIdx = 0) {
         lastDayIdx = dayIdx;
-        tempTime = dayTimes[dayIdx] || TIME_OPTIONS[0];
+        tempTime = dayTimes[dayIdx] || TIME_OPTIONS[dayIdx][0];
         renderTimeOptions();
         document.getElementById("timeOverlay").classList.add("open");
       }
 
       function renderTimeOptions() {
         const grid = document.getElementById("timeOptions");
-        grid.innerHTML = TIME_OPTIONS.map(
+        const options = TIME_OPTIONS[lastDayIdx] || TIME_OPTIONS[0];
+        grid.innerHTML = options.map(
           (t) =>
             `<div class="time-opt ${t === tempTime ? "active" : ""}" onclick="selectTempTime('${t}')">${t}</div>`,
         ).join("");
