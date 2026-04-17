@@ -2044,6 +2044,20 @@
         document.getElementById("detailBack").textContent =
           navFrom === 'favs' ? '‹ Улюблені' :
           navFrom === 'home' ? '‹ Тур' : '‹ Каталог';
+        const addBtn = document.getElementById("dBtnAdd");
+        if (navFrom === 'home') {
+          addBtn.innerHTML = '<i class="ph-bold ph-trash-simple"></i>';
+          addBtn.onclick = () => {
+            for (let d = 0; d < 3; d++) {
+              const i = tourPlaces[d].indexOf(idx);
+              if (i !== -1) { removeTour(d, i); break; }
+            }
+            closeDetail();
+          };
+        } else {
+          addBtn.innerHTML = '<i class="ph-bold ph-plus"></i>';
+          addBtn.onclick = addToTour;
+        }
         if (tg && tg.BackButton) {
           tg.BackButton.show();
           tg.BackButton.onClick(closeDetail);
