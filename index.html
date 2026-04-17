@@ -2042,7 +2042,8 @@
         currentIdx = idx;
         navFrom = from || 'catalog';
         document.getElementById("detailBack").textContent =
-          navFrom === 'favs' ? '‹ Улюблені' : '‹ Каталог';
+          navFrom === 'favs' ? '‹ Улюблені' :
+          navFrom === 'home' ? '‹ Тур' : '‹ Каталог';
         if (tg && tg.BackButton) {
           tg.BackButton.show();
           tg.BackButton.onClick(closeDetail);
@@ -2354,6 +2355,8 @@
                 const p = allPlaces[tourPlaces[day][i]];
                 if (!p) continue;
                 slot.classList.add("filled");
+                slot.style.cursor = "pointer";
+                slot.onclick = () => openDetail(tourPlaces[day][i], 'home');
                 const rating = p.rating ? parseFloat(p.rating).toFixed(1) : "";
                 const bgColor = CAT_BG_LIGHT[p.category] || "#FFE0ED";
                 slot.innerHTML = `
