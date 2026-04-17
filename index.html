@@ -1257,6 +1257,25 @@
         background: var(--pink);
         color: #fff;
       }
+      .favspick-pill {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 7px 14px;
+        border-radius: 20px;
+        background: #F0E8EE;
+        color: var(--text2);
+        font-size: 13px;
+        font-weight: 600;
+        white-space: nowrap;
+        cursor: pointer;
+        flex-shrink: 0;
+        transition: background 0.15s, color 0.15s;
+      }
+      .favspick-pill.active {
+        background: var(--pink);
+        color: #fff;
+      }
       .time-actions {
         display: flex;
         gap: 12px;
@@ -1756,6 +1775,7 @@
     <div class="day-overlay" id="favsPickOverlay">
       <div class="day-sheet" id="favsPickSheet" style="max-height:70vh;display:flex;flex-direction:column;padding:20px 20px 32px;">
         <div class="day-sheet-title">Обери місце для туру</div>
+        <div id="favsPickPills" style="display:flex;gap:8px;overflow-x:auto;padding-bottom:12px;scrollbar-width:none;flex-shrink:0;"></div>
         <div id="favsPickList" style="overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:10px;"></div>
         <div class="time-actions" style="margin-top:16px">
           <button class="tbtn tbtn-cancel" onclick="closeFavsPick()">скасувати</button>
@@ -2620,21 +2640,28 @@
 
       let favsPickDay = -1;
       let favsPickSlot = -1;
+      let favsPickFilter = "all";
 
-      function openFavsPick(day, slotIdx) {
-        favsPickDay = day;
-        favsPickSlot = slotIdx;
+      const CAT_PICK_LABELS = {
+        cafe:   { label: "Поїсти",      icon: "ph-fork-knife" },
+        park:   { label: "Погуляти",    icon: "ph-park" },
+        museum: { label: "Подивитися",  icon: "ph-image" },
+        photo:  { label: "Пофоткатися", icon: "ph-camera" },
+        other:  { label: "Інше",        icon: "ph-map-pin" },
+      };
+
+      function renderFavsPickList() {
         const list = document.getElementById("favsPickList");
         list.innerHTML = "";
-        // Already placed in this day
-        const placed = tourPlaces[day];
+        const placed = tourPlaces[favsPickDay];
         [...favs].forEach((idx) => {
           const p = allPlaces[idx];
           if (!p) return;
+          if (favsPickFilter !== "all" && p.category !== favsPickFilter) return;
           const alreadyIn = placed.includes(idx);
+          const bg = CAT_BG_LIGHT[p.category] || "#FFE0ED";
           const item = document.createElement("div");
           item.className = "day-option" + (alreadyIn ? " disabled" : "");
-          const bg = CAT_BG_LIGHT[p.category] || "#FFE0ED";
           item.innerHTML = `
             <div style="display:flex;align-items:center;gap:10px;min-width:0">
               <div style="width:36px;height:36px;border-radius:10px;background:${bg};flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;">
@@ -2656,6 +2683,45 @@
           }
           list.appendChild(item);
         });
+        if (list.children.length === 0) {
+          list.innerHTML = `<div style="text-align:center;padding:24px 0;color:var(--text2);font-size:14px;">Немає улюблених у цій категорії</div>`;
+        }
+      }
+
+      function setFavsPickFilter(cat, el) {
+        favsPickFilter = cat;
+        document.querySelectorAll(".favspick-pill").forEach(p => p.classList.remove("active"));
+        el.classList.add("active");
+        renderFavsPickList();
+      }
+
+      function openFavsPick(day, slotIdx) {
+        favsPickDay = day;
+        favsPickSlot = slotIdx;
+        favsPickFilter = "all";
+
+        // Build category pills — only cats that have favorites
+        const catsInFavs = new Set([...favs].map(i => allPlaces[i]?.category).filter(Boolean));
+        const pillsEl = document.getElementById("favsPickPills");
+        pillsEl.innerHTML = "";
+
+        const allPill = document.createElement("div");
+        allPill.className = "favspick-pill active";
+        allPill.textContent = "Всі";
+        allPill.onclick = () => setFavsPickFilter("all", allPill);
+        pillsEl.appendChild(allPill);
+
+        ["cafe","park","museum","photo","other"].forEach(cat => {
+          if (!catsInFavs.has(cat)) return;
+          const c = CAT_PICK_LABELS[cat];
+          const pill = document.createElement("div");
+          pill.className = "favspick-pill";
+          pill.innerHTML = `<i class="ph-bold ${c.icon}"></i> ${c.label}`;
+          pill.onclick = () => setFavsPickFilter(cat, pill);
+          pillsEl.appendChild(pill);
+        });
+
+        renderFavsPickList();
         document.getElementById("favsPickOverlay").classList.add("open");
       }
 
