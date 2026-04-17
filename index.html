@@ -1616,7 +1616,7 @@
     <div class="detail-overlay" id="detailOverlay">
       <div class="detail-sheet">
         <div class="detail-nav">
-          <div class="detail-back" onclick="closeDetail()">‹ Деталі</div>
+          <div class="detail-back" id="detailBack" onclick="closeDetail()">‹ Каталог</div>
         </div>
         <div class="detail-hero" id="dHero"></div>
         <div class="detail-body">
@@ -1787,6 +1787,7 @@
       let dayTimes = ["09:00", "13:00", "18:00"];
       let hasSeenOnboarding = false;
       let currentIdx = -1;
+      let navFrom = 'catalog'; // 'catalog' | 'favs'
       let activeCat = "cafe";
       let activeSubFilter = "all";
       let pendingAddIdx = -1;
@@ -2035,10 +2036,17 @@
         renderPlaces();
       }
 
-      function openDetail(idx) {
+      function openDetail(idx, from) {
         const p = allPlaces[idx];
         if (!p) return;
         currentIdx = idx;
+        navFrom = from || 'catalog';
+        document.getElementById("detailBack").textContent =
+          navFrom === 'favs' ? '‹ Улюблені' : '‹ Каталог';
+        if (tg && tg.BackButton) {
+          tg.BackButton.show();
+          tg.BackButton.onClick(closeDetail);
+        }
         const bg = CAT_BG_LIGHT[p.category] || "#7D6A6C";
         const emoji = getCatEmoji(p.category);
         const rating = parseRating(p.rating) || "–";
@@ -2108,6 +2116,10 @@
 
       function closeDetail() {
         document.getElementById("detailOverlay").classList.remove("open");
+        if (tg && tg.BackButton) {
+          tg.BackButton.hide();
+          tg.BackButton.offClick(closeDetail);
+        }
       }
 
       document
@@ -2397,7 +2409,7 @@
               const bg = CAT_BG_LIGHT[p.category] || "#7D6A6C";
               const rating = parseRating(p.rating) || "–";
               return `
-      <div class="fav-row-item" onclick="openDetail(${idx})">
+      <div class="fav-row-item" onclick="openDetail(${idx}, 'favs')">
         <div class="fav-thumb" style="background:${bg};overflow:hidden">${thumbHTML(p)}</div>
         <div class="fav-body">
           <div class="fav-name">${p.name}</div>
