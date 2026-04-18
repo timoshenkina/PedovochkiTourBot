@@ -8,6 +8,29 @@
     />
     <title>Pedovki Tour</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+      // ── АНАЛІТИКА ──
+      const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyDsmMDmOE-y0wISNueCCz2ojrqkhGRoU1XFd-EdhXT6dZWYJALV1i6ayur72-2ZGXt/exec';
+      const sessionId = Math.random().toString(36).substr(2, 9);
+      const userId = window.Telegram?.WebApp?.initDataUnsafe?.user?.id ?? 'anonymous';
+
+      function trackEvent(action, category = '', place_id = '', place_name = '') {
+        const params = new URLSearchParams({
+          action: 'track',
+          user_id: userId,
+          session_id: sessionId,
+          event: action,
+          category: category,
+          place_id: place_id,
+          place_name: place_name
+        });
+        fetch(WEB_APP_URL + '?' + params.toString(), {
+          method: 'GET',
+          mode: 'no-cors',
+          redirect: 'follow'
+        }).catch(() => {});
+      }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -2100,12 +2123,14 @@
           .querySelectorAll("#subFilters .sub-pill")
           .forEach((p, i) => p.classList.toggle("active", i === 0));
         renderPlaces();
+        trackEvent('category_view', activeCat);
       }
 
       function openDetail(idx, from) {
         const p = allPlaces[idx];
         if (!p) return;
         currentIdx = idx;
+        trackEvent('place_view', p.category, p.id ?? String(idx), p.name);
         navFrom = from || 'catalog';
         document.getElementById("detailBack").textContent =
           navFrom === 'favs' ? '‹ Улюблені' :
@@ -2347,15 +2372,18 @@
       }
 
       function toggleFav(idx, btn) {
+        const p = allPlaces[idx];
         if (favs.has(idx)) {
           favs.delete(idx);
           btn.innerHTML = '<i class="ph ph-heart"></i>';
           btn.classList.remove("active");
+          trackEvent('favorite_remove', p?.category, p?.id ?? String(idx), p?.name);
         } else {
           favs.add(idx);
           btn.innerHTML = '<i class="ph-fill ph-heart"></i>';
           btn.classList.add("active");
           showToast("Додано до улюблених");
+          trackEvent('favorite_add', p?.category, p?.id ?? String(idx), p?.name);
         }
         renderFavs();
         saveToCloud();
@@ -2364,15 +2392,18 @@
       function toggleFavDetail() {
         if (currentIdx < 0) return;
         const btn = document.getElementById("dBtnFav");
+        const p = allPlaces[currentIdx];
         if (favs.has(currentIdx)) {
           favs.delete(currentIdx);
           btn.innerHTML = '<i class="ph ph-heart"></i>';
           btn.className = "dbtn dbtn-fav";
+          trackEvent('favorite_remove', p?.category, p?.id ?? String(currentIdx), p?.name);
         } else {
           favs.add(currentIdx);
           btn.innerHTML = '<i class="ph-fill ph-heart"></i>';
           btn.className = "dbtn dbtn-fav active";
           showToast("Додано до улюблених");
+          trackEvent('favorite_add', p?.category, p?.id ?? String(currentIdx), p?.name);
         }
         renderPlaces();
         renderFavs();
@@ -2921,6 +2952,31 @@
       loadFromCloud(() => {
         loadPlaces();
       });
+    </script>
+
+    <!-- Банер приватності -->
+    <div id="privacyBanner" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:9999; padding:0 12px 12px;">
+      <div style="background:#1C1C1E; color:#fff; border-radius:16px; padding:16px; font-size:14px; line-height:1.5;">
+        <p>Цей гід збирає анонімну статистику переглядів для покращення підбірки місць. Особисті дані не зберігаються.</p>
+        <button onclick="closePrivacyBanner()" style="margin-top:12px; width:100%; background:#fff; color:#1C1C1E; border:none; border-radius:10px; padding:10px; font-size:15px; font-weight:600; cursor:pointer;">Зрозуміло</button>
+      </div>
+    </div>
+
+    <script>
+      function closePrivacyBanner() {
+        document.getElementById('privacyBanner').style.display = 'none';
+        Telegram.WebApp.CloudStorage.setItem('privacy_shown', '1', () => {});
+      }
+
+      // Перевіряємо чи вже показували банер
+      Telegram.WebApp.CloudStorage.getItem('privacy_shown', (err, val) => {
+        if (!val || val !== '1') {
+          document.getElementById('privacyBanner').style.display = 'block';
+        }
+      });
+
+      // Фіксуємо старт сесії
+      trackEvent('session_start');
     </script>
   </body>
 </html>
