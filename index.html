@@ -25,9 +25,7 @@
           place_name: place_name
         });
         fetch(WEB_APP_URL + '?' + params.toString(), {
-          method: 'GET',
-          mode: 'no-cors',
-          redirect: 'follow'
+          mode: 'no-cors'
         }).catch(() => {});
       }
     </script>
