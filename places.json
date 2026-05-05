@@ -259,4 +259,18 @@
     "photo_url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAFEs_vYMgXn9zSTLBjrCzrEXAsEjgffqovaxdrXL5_9dTwxNwpUjGD0954et-oVTMG4Apgg9omfRBbR3plb5VT6a8LvD9CHOQYwHsjXHFtoAbzF_F5scv6W8vvDBnkn-IhJIbE=w426-h240-k-no",
     "instagram": ""
   }
+  ,
+  {
+    "id": "8 поїсти",
+    "name": "FLAT5",
+    "category": "cafe",
+    "address": "пл. Ринок, 39",
+    "price": "$",
+    "map_url": "https://maps.app.goo.gl/1yHNYD6EhYzpR1nV6",
+    "rating": "4.4",
+    "open_hours": "11:00 - 21:00",
+    "description": "Затишне кафе на площі Ринок",
+    "photo_url": "https://www.google.com/maps/place/FLAT5/@49.8423403,24.0313177,3a,75y,90t/data=!3m8!1e2!3m6!1sAF1QipPzldq_kj52tcns-4it52Xcx22a536SDXrbxFCD!2e10!3e12!6shttps:%2F%2Flh3.googleusercontent.com%2Fp%2FAF1QipPzldq_kj52tcns-4it52Xcx22a536SDXrbxFCD%3Dw203-h270-k-no!7i3024!8i4032!4m7!3m6!1s0x473adddd71890e71:0xe8d32950f5a7c526!8m2!3d49.8425361!4d24.0312361!10e5!16s%2Fg%2F11rjbfnb92?entry=ttu&g_ep=EgoyMDI2MDQyOS4wIKXMDSoASAFQAw%3D%3D#",
+    "instagram": ""
+  }
 ]
