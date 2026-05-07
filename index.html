@@ -1372,6 +1372,8 @@
         cursor: pointer;
         font-family: "Playfair Display", serif;
         transition: all 0.2s;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
       }
       .time-actions .tbtn:active {
         transform: scale(0.96);
@@ -1833,7 +1835,7 @@
 
     <!-- TIME SELECTOR -->
     <div class="day-overlay" id="timeOverlay">
-      <div class="day-sheet" style="padding-bottom: 24px">
+      <div class="day-sheet" style="padding-bottom: calc(24px + 78px)">
         <div
           class="day-sheet-title"
           style="margin-bottom: 24px; font-size: 20px"
@@ -2955,13 +2957,18 @@
       }
 
       function saveAndCloseTimePicker() {
-        if (tempTime) {
-          dayTimes[lastDayIdx] = tempTime;
-          renderFavSlots();
-          saveToCloud();
-          showToast("Час змінено на " + tempTime);
+        try {
+          if (tempTime) {
+            dayTimes[lastDayIdx] = tempTime;
+            renderFavSlots();
+            saveToCloud();
+            showToast("Час змінено на " + tempTime);
+          }
+        } catch (e) {
+          console.error("saveAndCloseTimePicker error:", e);
+        } finally {
+          closeTimePicker();
         }
-        closeTimePicker();
       }
 
       function closeTimePicker() {
