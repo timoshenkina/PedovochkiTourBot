@@ -1473,11 +1473,8 @@
         max-width: 341px;
         height: 464px;
         background-color: #ffeaa2;
-        background-image: url("animation/onboarding_bg.png");
-        background-size: cover;
-        background-position: center;
         border-radius: 12px;
-        border: 1px solid #ffffff;
+        border: 1px solid rgba(255,255,255,0.1);
         padding: 40px 24px;
         display: flex;
         flex-direction: column;
@@ -1486,7 +1483,69 @@
         text-align: center;
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         position: relative;
+        overflow: hidden;
         color: #3e2021;
+      }
+      /* decorative bg objects */
+      .ob-crown {
+        position: absolute;
+        top: 60px;
+        left: -10px;
+        width: 140px;
+        height: auto;
+        transform: rotate(9deg);
+        pointer-events: none;
+        mix-blend-mode: darken;
+      }
+      .ob-crown-halftone {
+        position: absolute;
+        top: 60px;
+        left: -10px;
+        width: 140px;
+        height: auto;
+        transform: rotate(9deg);
+        pointer-events: none;
+        opacity: 0.44;
+      }
+      .ob-rose {
+        position: absolute;
+        top: 55px;
+        right: -10px;
+        width: 120px;
+        height: auto;
+        transform: rotate(-8deg);
+        pointer-events: none;
+        opacity: 0.66;
+        mix-blend-mode: darken;
+      }
+      .ob-2026 {
+        position: absolute;
+        top: 18px;
+        right: 50px;
+        width: 20px;
+        height: auto;
+        pointer-events: none;
+      }
+      .ob-lviv {
+        position: absolute;
+        top: 10px;
+        right: 22px;
+        font-family: "LeoHand", "Montserrat Alternates", cursive;
+        font-size: 11px;
+        color: rgba(135, 8, 8, 0.8);
+        pointer-events: none;
+        letter-spacing: -0.4px;
+      }
+      .ob-cathedral {
+        position: absolute;
+        bottom: -10px;
+        right: -10px;
+        width: 180px;
+        height: auto;
+        transform: rotate(-169deg) scaleY(-1);
+        pointer-events: none;
+        opacity: 0.37;
+        mix-blend-mode: darken;
       }
       .onboarding-title {
         font-family: "Playfair Display", serif;
@@ -1551,7 +1610,7 @@
           onclick="goBack()"
           style="visibility: hidden"
         ></div>
-        <div class="nav-title">Pedovochki tour</div>
+        <div class="nav-title">Lviv tour</div>
         <div class="nav-done"></div>
       </div>
 
@@ -1888,6 +1947,13 @@
     <!-- ONBOARDING MODAL -->
     <div class="onboarding-overlay" id="onboardingOverlay">
       <div class="onboarding-modal">
+        <!-- decorative background objects -->
+        <img class="ob-crown" src="animation/modal_crown.png" alt="" />
+        <img class="ob-crown-halftone" src="animation/modal_crown_halftone.png" alt="" />
+        <img class="ob-rose" src="animation/modal_rose.png" alt="" />
+        <img class="ob-2026" src="animation/modal_2026.png" alt="" />
+        <span class="ob-lviv">Lviv</span>
+        <img class="ob-cathedral" src="animation/modal_cathedral.png" alt="" />
         <div>
           <div class="onboarding-title">
             Наш особистий бот для складання плану вихідних у Львові
