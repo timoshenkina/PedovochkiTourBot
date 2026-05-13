@@ -815,6 +815,24 @@
         transform: translateX(-50%) scale(0.15);
         animation: splashGrowTitle 0.85s cubic-bezier(0.22,1,0.36,1) 0.6s forwards;
       }
+      #splash-lviv-tour {
+        position: absolute;
+        top: 62px;
+        left: 50%;
+        transform: translateX(-50%) scale(0.15);
+        transform-origin: bottom center;
+        opacity: 0;
+        font-family: "Playfair Display", Georgia, serif;
+        font-size: 38px;
+        font-weight: 900;
+        font-style: italic;
+        color: #8b2020;
+        letter-spacing: -1px;
+        white-space: nowrap;
+        animation: splashGrowTitle 0.85s cubic-bezier(0.22,1,0.36,1) 0.6s forwards;
+        pointer-events: none;
+        text-align: center;
+      }
       #splash-angel {
         position: absolute;
         right: -10px;
@@ -868,6 +886,14 @@
         }
         @keyframes splashGrowTitleDesktop {
           to { opacity: 1; transform: scale(1); }
+        }
+        #splash-lviv-tour {
+          top: calc(30% - 52px);
+          left: 52%;
+          font-size: 42px;
+          transform: scale(0.15);
+          transform-origin: bottom center;
+          animation: splashGrowTitleDesktop 0.85s cubic-bezier(0.22,1,0.36,1) 0.6s forwards;
         }
 
         #splash-angel {
@@ -1788,6 +1814,7 @@
       <button id="splash-skip" onclick="hideSplash()">✕</button>
       <div id="splash-cathedral"></div>
       <div id="splash-angel"></div>
+      <div id="splash-lviv-tour">Lviv tour</div>
       <div id="splash-title"></div>
     </div>
 
