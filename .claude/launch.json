@@ -4,8 +4,8 @@
     {
       "name": "project_telegramm_bot",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", "-p", "8080", "/Users/darinatimosenko/Desktop/project_telegramm_bot"],
-      "port": 8080
+      "runtimeArgs": ["http-server", "/Users/darinatimosenko/Desktop/project_telegramm_bot/.claude/worktrees/xenodochial-mayer-fd04a6", "-p", "8091", "-a", "127.0.0.1", "-c-1"],
+      "port": 8091
     }
   ]
 }
